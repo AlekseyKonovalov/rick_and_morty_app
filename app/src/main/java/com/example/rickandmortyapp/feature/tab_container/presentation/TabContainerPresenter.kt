@@ -8,6 +8,10 @@ import javax.inject.Inject
 class TabContainerPresenter @Inject constructor() : BasePresenter<TabContainerView>() {
 
     override fun onFirstViewAttach() {
-        viewState.setCharactersScreen()
+        viewState.setFragment(TabContainerFragment.CHARACTERS)
+    }
+
+    fun onClickTab(keyFragment: String) {
+        viewState.setFragment(keyFragment)
     }
 }
