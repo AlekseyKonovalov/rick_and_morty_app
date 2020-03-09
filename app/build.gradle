@@ -29,6 +29,7 @@ android {
 
 ext {
     room_version = "2.2.4"
+    glideVersion = '4.7.1'
     timber_version = "4.7.0"
 }
 
@@ -71,5 +72,9 @@ dependencies {
     implementation "androidx.room:room-rxjava2:$room_version"
 
     implementation "com.jakewharton.timber:timber:$timber_version"
+
+    //Glide
+    implementation "com.github.bumptech.glide:glide:$glideVersion"
+    kapt "com.github.bumptech.glide:compiler:$glideVersion"
 
 }

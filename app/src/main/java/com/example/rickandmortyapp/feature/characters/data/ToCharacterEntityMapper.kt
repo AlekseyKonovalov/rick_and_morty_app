@@ -20,7 +20,7 @@ class ToCharacterEntityMapper @Inject constructor() {
                     originUrl = it.origin.url,
                     currentLocationName = it.location.name,
                     currentLocationUrl = it.location.url,
-                    imageUrl = it.url,
+                    imageUrl = it.image,
                     episodesList = it.episode,
                     url = it.url,
                     createdDate = it.created

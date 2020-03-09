@@ -2,12 +2,17 @@ package com.example.rickandmortyapp.feature.tab_container.presentation
 
 
 import android.os.Bundle
+import android.view.View
 import androidx.fragment.app.Fragment
 import com.arellomobile.mvp.presenter.InjectPresenter
 import com.arellomobile.mvp.presenter.ProvidePresenter
 import com.example.rickandmortyapp.R
 import com.example.rickandmortyapp.core.base.BaseFragment
 import com.example.rickandmortyapp.feature.characters.presentation.CharactersFragment
+import com.example.rickandmortyapp.feature.episodes.presentation.EpisodesFragment
+import com.example.rickandmortyapp.feature.location.presentation.LocationFragment
+import com.example.rickandmortyapp.feature.profile.presentation.ProfileFragment
+import com.example.rickandmortyapp.feature.tab_container.model.TabScreen
 import kotlinx.android.synthetic.main.tab_container_fragment.*
 
 
@@ -21,31 +26,17 @@ class TabContainerFragment : BaseFragment(),
     @ProvidePresenter
     fun providePresenter() = scope.getInstance(TabContainerPresenter::class.java)
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
         initListeners()
     }
 
     private fun initListeners() {
-        navigation_bar.setOnNavigationItemSelectedListener {
-            when (it.itemId) {
-                R.id.action_characters -> {
-                    presenter.onClickTab(CHARACTERS)
-                    true
-                }
-                R.id.action_episodes -> {
-                    true
-                }
-                R.id.action_location -> {
-                    true
-                }
-                R.id.action_account -> {
-                    true
-                }
-                else -> {
-                    true
-                }
+        navigation_bar.setOnNavigationItemSelectedListener { menuItem ->
+            SCREENS.find { it.resId == menuItem.itemId }?.name?.let {
+                presenter.onClickTab(it)
             }
+            true
         }
     }
 
@@ -56,7 +47,10 @@ class TabContainerFragment : BaseFragment(),
     private fun openFragment(keyFragment: String) {
         val transaction = fragmentManager?.beginTransaction() ?: return
         with(transaction) {
-            replace(R.id.tab_fragments_container, SCREENS[keyFragment] as Fragment)
+            replace(
+                R.id.tab_fragments_container,
+                SCREENS.find { it.name == keyFragment }?.fragment as Fragment
+            )
             addToBackStack(null)
             commit()
         }
@@ -64,11 +58,14 @@ class TabContainerFragment : BaseFragment(),
 
     companion object {
         const val CHARACTERS = "CHARACTERS"
-        const val EPISODES = "EPISODES"
-        const val LOCATION = "LOCATION"
-        const val PROFILE = "PROFILE"
-        private val SCREENS = mapOf(
-            CHARACTERS to CharactersFragment()
+        private const val EPISODES = "EPISODES"
+        private const val LOCATION = "LOCATION"
+        private const val PROFILE = "PROFILE"
+        private val SCREENS = listOf(
+            TabScreen(R.id.action_characters, CHARACTERS, CharactersFragment()),
+            TabScreen(R.id.action_episodes, EPISODES, EpisodesFragment()),
+            TabScreen(R.id.action_location, LOCATION, LocationFragment()),
+            TabScreen(R.id.action_account, PROFILE, ProfileFragment())
         )
     }
 
