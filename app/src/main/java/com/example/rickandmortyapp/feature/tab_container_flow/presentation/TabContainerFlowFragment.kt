@@ -4,7 +4,10 @@ import com.arellomobile.mvp.presenter.InjectPresenter
 import com.arellomobile.mvp.presenter.ProvidePresenter
 import com.example.rickandmortyapp.R
 import com.example.rickandmortyapp.core.base.BaseFragment
+import com.example.rickandmortyapp.feature.characters.presentation.model.CharacterFavoriteBus
 import com.example.rickandmortyapp.feature.tab_container.presentation.TabContainerFragment
+import toothpick.Scope
+import toothpick.config.Module
 
 class TabContainerFlowFragment : BaseFragment(),
     TabContainerFlowView {

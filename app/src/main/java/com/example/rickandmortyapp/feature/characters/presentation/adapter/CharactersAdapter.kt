@@ -5,12 +5,14 @@ import androidx.recyclerview.widget.DiffUtil
 import com.example.rickandmortyapp.R
 import com.example.rickandmortyapp.core.BaseAdapter
 import com.example.rickandmortyapp.feature.characters.domain.entity.CharacterEntity
+import com.example.rickandmortyapp.feature.characters.presentation.model.CharacterModel
 
 class CharactersAdapter(
-    private val onItemClick: (characterEntity: CharacterEntity) -> Unit
+    private val onItemClick: (characterEntity: CharacterModel) -> Unit,
+    private val onFavoriteClick: (characterEntity: CharacterModel) -> Unit
 ) : BaseAdapter<CharactersViewHolder>() {
 
-    var items: List<CharacterEntity> = listOf()
+    var items: List<CharacterModel> = listOf()
         set(value) {
             val callback =
                 CharactersDiffCallback(
@@ -29,7 +31,8 @@ class CharactersAdapter(
     override fun onCreateViewHolder(view: View, viewType: Int) =
         CharactersViewHolder(
             view,
-            onItemClick
+            onItemClick,
+            onFavoriteClick
         )
 
     override fun onBindViewHolder(holder: CharactersViewHolder, position: Int) =

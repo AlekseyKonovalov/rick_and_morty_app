@@ -9,6 +9,7 @@ import com.example.rickandmortyapp.R
 import com.example.rickandmortyapp.core.base.BaseFragment
 import com.example.rickandmortyapp.feature.characters.domain.entity.CharacterEntity
 import com.example.rickandmortyapp.feature.characters.presentation.adapter.CharactersAdapter
+import com.example.rickandmortyapp.feature.characters.presentation.model.CharacterModel
 import kotlinx.android.synthetic.main.characters_fragment.*
 
 
@@ -21,7 +22,7 @@ class CharactersFragment : BaseFragment(), CharactersView {
     @ProvidePresenter
     fun providePresenter() = scope.getInstance(CharactersPresenter::class.java)
 
-    private val charactersAdapter by lazy { CharactersAdapter(presenter::onClickCharacterItem) }
+    private val charactersAdapter by lazy { CharactersAdapter(presenter::onCharacterItemClick, presenter::onFavoriteCharacterItemClick) }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -30,11 +31,10 @@ class CharactersFragment : BaseFragment(), CharactersView {
 
     private fun initAdapter() {
         characters_list.layoutManager = GridLayoutManager(requireContext(), NUMBERS_OF_COLUMN)
-        // characters_list.layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
         characters_list.adapter = charactersAdapter
     }
 
-    override fun setItems(items: List<CharacterEntity>) {
+    override fun setItems(items: List<CharacterModel>) {
         charactersAdapter.items = items
     }
 
