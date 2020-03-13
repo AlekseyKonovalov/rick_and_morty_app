@@ -7,5 +7,6 @@ import com.example.rickandmortyapp.feature.characters.presentation.model.Charact
 
 @StateStrategyType(AddToEndSingleStrategy::class)
 interface CharactersView : Presentable {
+    fun initAdapter()
     fun setItems(items: List<CharacterModel>)
 }

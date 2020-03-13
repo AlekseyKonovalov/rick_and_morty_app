@@ -2,6 +2,7 @@ package com.example.rickandmortyapp.core.di
 
 import android.content.Context
 import com.example.rickandmortyapp.BuildConfig
+import com.example.rickandmortyapp.Navigator
 import com.example.rickandmortyapp.core.BaseUrl
 import com.example.rickandmortyapp.core.ResourceProvider
 import com.example.rickandmortyapp.db.AppDatabase
@@ -15,5 +16,6 @@ class ApplicationModule(context: Context) : Module() {
         bind<ResourceProvider>().singleton()
         bind<String>().withName(BaseUrl::class.java).toInstance(BuildConfig.BASE_URL)
         bind<AppDatabase>().toProvider(DatabaseProvider::class.java).singleton()
+        bind<Navigator>().singleton()
     }
 }

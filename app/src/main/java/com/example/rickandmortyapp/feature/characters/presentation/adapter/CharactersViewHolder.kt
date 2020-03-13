@@ -20,12 +20,12 @@ class CharactersViewHolder(
                 else context.getDrawable(R.drawable.ic_favorite_inactive)
             )
             favorite.setOnClickListener {
-                if (hasPosition) onFavoriteClick.invoke(data)
+                if (hasPosition) onItemClick.invoke(data)
             }
             Glide.with(context)
                 .load(data.imageUrl)
                 .into(view.item_image)
-            setOnClickListener {
+            item_container.setOnClickListener {
                 if (hasPosition) onItemClick.invoke(data)
             }
         }

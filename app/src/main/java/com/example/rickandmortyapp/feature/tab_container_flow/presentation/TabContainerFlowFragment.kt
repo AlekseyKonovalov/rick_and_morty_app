@@ -4,10 +4,9 @@ import com.arellomobile.mvp.presenter.InjectPresenter
 import com.arellomobile.mvp.presenter.ProvidePresenter
 import com.example.rickandmortyapp.R
 import com.example.rickandmortyapp.core.base.BaseFragment
-import com.example.rickandmortyapp.feature.characters.presentation.model.CharacterFavoriteBus
+import com.example.rickandmortyapp.feature.character_detail.model.CharacterDetailsModel
+import com.example.rickandmortyapp.feature.character_detail.presentation.CharacterDetailsFragment
 import com.example.rickandmortyapp.feature.tab_container.presentation.TabContainerFragment
-import toothpick.Scope
-import toothpick.config.Module
 
 class TabContainerFlowFragment : BaseFragment(),
     TabContainerFlowView {
@@ -27,5 +26,29 @@ class TabContainerFlowFragment : BaseFragment(),
                 TabContainerFragment()
             )
             ?.commit()
+    }
+
+    override fun navigateToScreen(screen: String, data: Any) {
+        when (screen) {
+            SCREEN_CHARACTER_DETAIL -> {
+                routeToScreen(CharacterDetailsFragment.getInstance(data as CharacterDetailsModel))
+            }
+        }
+    }
+
+    private fun routeToScreen(fragment: BaseFragment) {
+        fragmentManager?.let {
+            it.beginTransaction()
+                .add(
+                    R.id.fragmentContainerView,
+                    fragment
+                )
+                .commit()
+        }
+
+    }
+
+    companion object {
+        const val SCREEN_CHARACTER_DETAIL = "SCREEN_CHARACTER_DETAIL"
     }
 }
