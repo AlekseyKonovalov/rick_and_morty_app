@@ -36,6 +36,7 @@ abstract class BaseFragment : MvpAppCompatFragment() {
         }
     }
 
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -45,6 +46,7 @@ abstract class BaseFragment : MvpAppCompatFragment() {
     protected open fun installModules(scope: Scope) {}
 
     private fun getBasicScopeName() = javaClass.simpleName
+
 
     companion object {
         private const val SCOPE_NAME_SAVE_KEY = "SCOPE_NAME_SAVE_KEY"

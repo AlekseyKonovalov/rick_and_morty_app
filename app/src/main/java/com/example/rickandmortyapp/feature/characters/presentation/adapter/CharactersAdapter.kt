@@ -3,8 +3,7 @@ package com.example.rickandmortyapp.feature.characters.presentation.adapter
 import android.view.View
 import androidx.recyclerview.widget.DiffUtil
 import com.example.rickandmortyapp.R
-import com.example.rickandmortyapp.core.BaseAdapter
-import com.example.rickandmortyapp.feature.characters.domain.entity.CharacterEntity
+import com.example.rickandmortyapp.core.recycler.BaseAdapter
 import com.example.rickandmortyapp.feature.characters.presentation.model.CharacterModel
 
 class CharactersAdapter(
@@ -12,19 +11,17 @@ class CharactersAdapter(
     private val onFavoriteClick: (characterEntity: CharacterModel) -> Unit
 ) : BaseAdapter<CharactersViewHolder>() {
 
-    var items: List<CharacterModel> = listOf()
-        set(value) {
-            val callback =
-                CharactersDiffCallback(
-                    field,
-                    value
-                )
-            val result = DiffUtil.calculateDiff(callback)
-            field = value
-            result.dispatchUpdatesTo(this)
-        }
+    private var itemsList: MutableList<CharacterModel> = mutableListOf()
 
-    override fun getItemCount() = items.size
+    fun updateDataSet(newItems: List<CharacterModel>) {
+        val callback = CharactersDiffCallback(this.itemsList, newItems)
+        val result = DiffUtil.calculateDiff(callback)
+        this.itemsList.clear()
+        this.itemsList.addAll(newItems)
+        result.dispatchUpdatesTo(this)
+    }
+
+    override fun getItemCount() = itemsList.size
 
     override fun onLayoutRequested(viewType: Int) = R.layout.item_character
 
@@ -36,7 +33,7 @@ class CharactersAdapter(
         )
 
     override fun onBindViewHolder(holder: CharactersViewHolder, position: Int) =
-        holder.bind(items[position])
+        holder.bind(itemsList[position])
 
 }
 

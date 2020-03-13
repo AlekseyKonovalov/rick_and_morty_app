@@ -1,11 +1,10 @@
 package com.example.rickandmortyapp.feature.characters.presentation
 
+import RxDecor
 import com.arellomobile.mvp.InjectViewState
 import com.example.rickandmortyapp.core.base.BasePresenter
 import com.example.rickandmortyapp.feature.characters.domain.CharactersInteractor
-import com.example.rickandmortyapp.feature.characters.domain.entity.CharacterEntity
 import com.example.rickandmortyapp.feature.characters.presentation.mapper.FromCharacterEntityMapper
-import com.example.rickandmortyapp.feature.characters.presentation.model.CharacterFavoriteBus
 import com.example.rickandmortyapp.feature.characters.presentation.model.CharacterModel
 import timber.log.Timber
 import javax.inject.Inject
@@ -23,8 +22,9 @@ class CharactersPresenter @Inject constructor(
     }
 
     private fun initViews() {
-        charactersInteractor.getAllCharacters()
+        charactersInteractor.getAllCharacters(page = 1)
             .map { fromCharacterEntityMapper.map(it) }
+            .compose(RxDecor.loading(viewState))
             .compose(schedulersTransformerObservable())
             .subscribe(
                 {
@@ -43,8 +43,7 @@ class CharactersPresenter @Inject constructor(
 
     fun onFavoriteCharacterItemClick(item: CharacterModel) {
         val indexItem = charactersList.indexOf(item)
-        val updatedItem = item.copy(isFavorite = !item.isFavorite)
-        charactersList[indexItem] = updatedItem
+        charactersList[indexItem] = item.copy(isFavorite = !item.isFavorite)
         viewState.setItems(charactersList)
     }
 }

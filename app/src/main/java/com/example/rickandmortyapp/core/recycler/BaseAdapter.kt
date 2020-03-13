@@ -1,9 +1,10 @@
-package com.example.rickandmortyapp.core
+package com.example.rickandmortyapp.core.recycler
 
 import android.content.Context
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import com.example.rickandmortyapp.core.inflate
 
 abstract class BaseAdapter<VH : RecyclerView.ViewHolder> : RecyclerView.Adapter<VH>() {
 

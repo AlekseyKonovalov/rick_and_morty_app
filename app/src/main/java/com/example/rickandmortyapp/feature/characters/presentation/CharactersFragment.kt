@@ -7,14 +7,17 @@ import com.arellomobile.mvp.presenter.InjectPresenter
 import com.arellomobile.mvp.presenter.ProvidePresenter
 import com.example.rickandmortyapp.R
 import com.example.rickandmortyapp.core.base.BaseFragment
-import com.example.rickandmortyapp.feature.characters.domain.entity.CharacterEntity
+import com.example.rickandmortyapp.core.gone
+import com.example.rickandmortyapp.core.show
 import com.example.rickandmortyapp.feature.characters.presentation.adapter.CharactersAdapter
 import com.example.rickandmortyapp.feature.characters.presentation.model.CharacterModel
 import kotlinx.android.synthetic.main.characters_fragment.*
 
 
 class CharactersFragment : BaseFragment(), CharactersView {
+
     override val layoutRes: Int = R.layout.characters_fragment
+
 
     @InjectPresenter
     lateinit var presenter: CharactersPresenter
@@ -34,8 +37,16 @@ class CharactersFragment : BaseFragment(), CharactersView {
         characters_list.adapter = charactersAdapter
     }
 
+    override fun hideProgress() {
+        progressbar.gone()
+    }
+
+    override fun showProgress() {
+        progressbar.show()
+    }
+
     override fun setItems(items: List<CharacterModel>) {
-        charactersAdapter.items = items
+        charactersAdapter.updateDataSet(items)
     }
 
     companion object {

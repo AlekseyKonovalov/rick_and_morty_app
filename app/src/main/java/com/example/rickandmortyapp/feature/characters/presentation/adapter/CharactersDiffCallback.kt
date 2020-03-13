@@ -1,7 +1,6 @@
 package com.example.rickandmortyapp.feature.characters.presentation.adapter
 
-import com.example.rickandmortyapp.core.ItemDiffCallback
-import com.example.rickandmortyapp.feature.characters.domain.entity.CharacterEntity
+import com.example.rickandmortyapp.core.recycler.ItemDiffCallback
 import com.example.rickandmortyapp.feature.characters.presentation.model.CharacterModel
 
 class CharactersDiffCallback(

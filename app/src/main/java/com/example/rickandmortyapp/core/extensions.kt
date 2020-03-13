@@ -5,6 +5,9 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.annotation.LayoutRes
+import com.jakewharton.rxbinding2.view.RxView
+import timber.log.Timber
+import java.util.concurrent.TimeUnit
 
 fun View.show() {
     visibility = View.VISIBLE
@@ -12,6 +15,15 @@ fun View.show() {
 
 fun View.gone() {
     visibility = View.GONE
+}
+
+fun View.handleDoubleClick(
+    timeout: Long = CLICK_TIMEOUT_MILLISECONDS,
+    onClickListener: () -> Unit
+) {
+    RxView.clicks(this)
+        .throttleFirst(timeout, TimeUnit.MILLISECONDS)
+        .subscribe({ onClickListener.invoke() }, { Timber.e(it.toString()) })
 }
 
 fun Context.inflate(
@@ -30,3 +42,5 @@ fun View.inflate(
 }
 
 fun String.removeNonDigit() = replace("[^\\d]".toRegex(), "")
+
+const val CLICK_TIMEOUT_MILLISECONDS = 1000L

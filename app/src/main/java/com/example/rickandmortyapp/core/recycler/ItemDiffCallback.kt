@@ -1,4 +1,4 @@
-package com.example.rickandmortyapp.core
+package com.example.rickandmortyapp.core.recycler
 
 import androidx.recyclerview.widget.DiffUtil
 
