@@ -22,6 +22,11 @@ abstract class BasePresenter<View : MvpView> : MvpPresenter<View>() {
         viewLifeCycleCompositeDisposable.add(this)
     }
 
+    override fun destroyView(view: View) {
+        super.destroyView(view)
+        viewLifeCycleCompositeDisposable.clear()
+    }
+
     override fun onDestroy() {
         fullLifeCycleCompositeDisposable.dispose()
         viewLifeCycleCompositeDisposable.dispose()

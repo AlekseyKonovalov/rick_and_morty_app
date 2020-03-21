@@ -7,6 +7,6 @@ import retrofit2.http.Query
 
 interface RickMortyApi {
     @GET("character/")
-    fun getAllCharacters(@Query("page") page: Int? = null): Observable<CharacterResponse>
+    fun getAllCharacters(@Query("page") page: Int): Observable<CharacterResponse>
 
 }
