@@ -1,6 +1,6 @@
 import android.os.Handler
 import android.os.Looper
-import com.example.rickandmortyapp.core.LoadingView
+import com.example.rickandmortyapp.core.base.LoadingView
 import io.reactivex.Completable
 import io.reactivex.CompletableTransformer
 import io.reactivex.Observable
