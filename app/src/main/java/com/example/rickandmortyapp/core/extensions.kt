@@ -5,7 +5,10 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.annotation.LayoutRes
+import com.google.android.material.appbar.AppBarLayout
+import com.google.android.material.appbar.CollapsingToolbarLayout
 import com.jakewharton.rxbinding2.view.RxView
+import kotlinx.android.synthetic.main.character_details_fragment.*
 import timber.log.Timber
 import java.util.concurrent.TimeUnit
 
@@ -15,6 +18,23 @@ fun View.show() {
 
 fun View.gone() {
     visibility = View.GONE
+}
+
+fun AppBarLayout.setTitle(collapsingToolbarLayout: CollapsingToolbarLayout, title: String){
+    var isShow = true
+    var scrollRange = -1
+    this.addOnOffsetChangedListener(AppBarLayout.OnOffsetChangedListener { barLayout, verticalOffset ->
+        if (scrollRange == -1) {
+            scrollRange = barLayout?.totalScrollRange!!
+        }
+        if (scrollRange + verticalOffset == 0) {
+            collapsingToolbarLayout.title = title
+            isShow = true
+        } else if (isShow) {
+            collapsingToolbarLayout.title = " "
+            isShow = false
+        }
+    })
 }
 
 fun View.handleDoubleClick(

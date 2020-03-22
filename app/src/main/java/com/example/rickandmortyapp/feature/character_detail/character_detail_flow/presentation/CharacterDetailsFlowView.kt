@@ -7,4 +7,6 @@ import com.example.rickandmortyapp.core.base.FlowView
 import com.example.rickandmortyapp.feature.character_detail.character_detail_fm.model.CharacterDetailsModel
 
 @StateStrategyType(AddToEndSingleStrategy::class)
-interface CharacterDetailsFlowView : FlowView
+interface CharacterDetailsFlowView : FlowView {
+    fun removeLastScreen()
+}

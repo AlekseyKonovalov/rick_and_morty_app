@@ -18,7 +18,7 @@ class SplashFlowPresenter @Inject constructor(
         splashNavigator.getData()
             .compose(schedulersTransformerObservable())
             .subscribe {
-               if (Flows.CHARACTER_DETAIL.screens.contains(it.screenData.screenName)){
+               if (Flows.SPLASH.screens.contains(it.screenData.screenName)){
 
                } else {
                    appNavigator.emmitData(it)

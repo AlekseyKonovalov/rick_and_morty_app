@@ -7,6 +7,7 @@ import com.example.rickandmortyapp.core.BaseUrl
 import com.example.rickandmortyapp.core.ResourceProvider
 import com.example.rickandmortyapp.db.AppDatabase
 import com.example.rickandmortyapp.db.DatabaseProvider
+import com.example.rickandmortyapp.navigation.CharacterDetailNavigator
 import com.example.rickandmortyapp.navigation.SplashNavigator
 import com.example.rickandmortyapp.navigation.TabContainerNavigator
 import toothpick.config.Module
@@ -21,5 +22,6 @@ class ApplicationModule(context: Context) : Module() {
         bind<AppNavigator>().singleton()
         bind<SplashNavigator>().singleton()
         bind<TabContainerNavigator>().singleton()
+        bind<CharacterDetailNavigator>().singleton()
     }
 }

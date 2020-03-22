@@ -7,5 +7,6 @@ data class NavigatorData (
 
 enum class Command {
     Navigate,
-    Replace
+    Replace,
+    Remove
 }

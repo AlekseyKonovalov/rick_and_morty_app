@@ -3,15 +3,17 @@ package com.example.rickandmortyapp.feature.tab_container.tab_container_flow.pre
 import com.arellomobile.mvp.presenter.InjectPresenter
 import com.arellomobile.mvp.presenter.ProvidePresenter
 import com.example.rickandmortyapp.R
+import com.example.rickandmortyapp.core.base.BaseFlowFragment
 import com.example.rickandmortyapp.core.base.BaseFragment
 import com.example.rickandmortyapp.feature.character_detail.character_detail_fm.model.CharacterDetailsModel
 import com.example.rickandmortyapp.feature.character_detail.character_detail_fm.presentation.CharacterDetailsFragment
 import com.example.rickandmortyapp.feature.tab_container.tab_container_fm.presentation.TabContainerFragment
 import com.example.rickandmortyapp.navigation.Flows
+import java.util.*
 
-class TabContainerFlowFragment : BaseFragment(), TabContainerFlowView {
+class TabContainerFlowFragment : BaseFlowFragment(), TabContainerFlowView {
 
-    override val layoutRes: Int = R.layout.fragment_container_view
+    override var fragments: LinkedList<String> = LinkedList()
 
     @InjectPresenter
     lateinit var presenter: TabContainerFlowPresenter
@@ -26,22 +28,27 @@ class TabContainerFlowFragment : BaseFragment(), TabContainerFlowView {
     override fun navigateToScreen(screen: String, data: Any?) {
         when (screen) {
             Flows.TAB_CONTAINER.TAB_CONTAINER -> {
-                routeToScreen(TabContainerFragment.getInstance())
+                routeToScreen(TabContainerFragment.getInstance(), Flows.TAB_CONTAINER.TAB_CONTAINER)
             }
         }
     }
 
-    private fun routeToScreen(fragment: BaseFragment) {
+    private fun routeToScreen(fragment: BaseFragment, tag: String) {
         fragmentManager?.let {
+            fragments.add(tag)
             it.beginTransaction()
                 .add(
                     R.id.fragmentContainerView,
-                    fragment
+                    fragment,
+                    tag
                 )
                 .addToBackStack(null)
                 .commit()
         }
+    }
 
+    override fun removeLastScreen() {
+        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
 
 }

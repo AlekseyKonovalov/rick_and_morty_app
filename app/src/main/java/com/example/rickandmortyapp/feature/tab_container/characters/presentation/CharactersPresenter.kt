@@ -56,7 +56,7 @@ class CharactersPresenter @Inject constructor(
                 Command.Navigate,
                 ScreenData(
                     Flows.CHARACTER_DETAIL.name,
-                    CharacterDetailsModel(item.imageUrl)
+                    CharacterDetailsModel(item.name, item.imageUrl)
                 )
             )
         )

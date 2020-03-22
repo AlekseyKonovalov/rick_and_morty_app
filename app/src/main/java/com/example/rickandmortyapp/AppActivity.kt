@@ -3,6 +3,7 @@ package com.example.rickandmortyapp
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.FragmentTransaction
+import com.example.rickandmortyapp.core.base.BaseFlowFragment
 import com.example.rickandmortyapp.core.base.BaseFragment
 import com.example.rickandmortyapp.core.di.NetModule
 import com.example.rickandmortyapp.feature.character_detail.character_detail_flow.presentation.CharacterDetailsFlowFragment
@@ -16,6 +17,7 @@ import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
 import toothpick.ktp.KTP
+import java.util.*
 import javax.inject.Inject
 
 
@@ -26,7 +28,7 @@ class AppActivity : AppCompatActivity() {
 
     private val disposables = CompositeDisposable()
 
-    private var currentFlow: String? = null
+    var flowFragments: LinkedList<String> = LinkedList()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -46,68 +48,100 @@ class AppActivity : AppCompatActivity() {
         )
     }
 
+    override fun onDestroy() {
+        super.onDestroy()
+        disposables.dispose()
+        flowFragments.clear()
+    }
+
     fun navigateToScreen(command: Command, screen: String, data: Any? = null) {
-        val flowFragment: BaseFragment
+        val flowFragment: BaseFlowFragment?
+        val tag: String
+
         when (screen) {
             Flows.SPLASH.name -> {
-                currentFlow = Flows.SPLASH.name
-                flowFragment = SplashFlowFragment.getInstance()
-                //routeToScreen(SplashFlowFragment.getInstance())
+                tag = Flows.SPLASH.name
+                flowFragment = if (command != Command.Remove) SplashFlowFragment.getInstance() else
+                    supportFragmentManager.findFragmentByTag(tag) as BaseFlowFragment?
             }
             Flows.TAB_CONTAINER.name -> {
-                currentFlow = Flows.TAB_CONTAINER.name
-                flowFragment = TabContainerFlowFragment()
-                //routeToScreen(TabContainerFlowFragment())
+                tag = Flows.TAB_CONTAINER.name
+                flowFragment = if (command != Command.Remove) TabContainerFlowFragment() else
+                    supportFragmentManager.findFragmentByTag(tag) as BaseFlowFragment?
             }
             Flows.CHARACTER_DETAIL.name -> {
-                currentFlow = Flows.CHARACTER_DETAIL.name
-                flowFragment = CharacterDetailsFlowFragment.getInstance(data as CharacterDetailsModel)
-                //routeToScreen(CharacterDetailsFlowFragment.getInstance(data as CharacterDetailsModel))
+                tag = Flows.CHARACTER_DETAIL.name
+                flowFragment = if (command != Command.Remove) CharacterDetailsFlowFragment.getInstance(data as CharacterDetailsModel)
+                else supportFragmentManager.findFragmentByTag(tag) as BaseFlowFragment?
             }
             else -> return
         }
 
+        if (flowFragment == null) return
+
         when (command) {
             Command.Navigate -> {
-                routeToScreen(flowFragment)
+                routeToScreen(flowFragment, tag)
             }
             Command.Replace -> {
-                replaceScreen(flowFragment)
+                replaceScreen(flowFragment, tag)
+            }
+            Command.Remove -> {
+                removeScreen(flowFragment)
             }
         }
     }
 
-    private fun routeToScreen(fragment: BaseFragment) {
+    private fun routeToScreen(fragment: BaseFragment, tag: String) {
+        flowFragments.add(tag)
         supportFragmentManager.beginTransaction()
             .add(
                 R.id.fragmentContainerView,
                 fragment,
-                currentFlow
+                tag
             )
             .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
             .addToBackStack(null)
             .commit()
     }
 
-    private fun replaceScreen(fragment: BaseFragment) {
+    private fun replaceScreen(fragment: BaseFragment, tag: String) {
+        flowFragments.removeLast()
+        flowFragments.add(tag)
         supportFragmentManager.beginTransaction()
             .replace(
                 R.id.fragmentContainerView,
-                fragment
+                fragment,
+                tag
             )
-            .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
-            .addToBackStack(null)
+            .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
             .commit()
     }
 
+    private fun removeScreen(fragment: BaseFragment) {
+        flowFragments.removeLast()
+        supportFragmentManager.beginTransaction()
+            .remove(fragment)
+            .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_CLOSE)
+            .commit()
+        supportFragmentManager.popBackStack()
+    }
+
     override fun onBackPressed() {
-        when {
-            currentFlow == Flows.TAB_CONTAINER.name || supportFragmentManager.backStackEntryCount == 0 -> {
-                super.onBackPressed()
-            }
-            else -> {
-                supportFragmentManager.popBackStack()
-            }
+        val currentFlowFragment = (supportFragmentManager.findFragmentByTag(flowFragments.last())
+                as? BaseFlowFragment)
+        val countChildFragments = currentFlowFragment?.fragments?.size ?: 0
+
+        if (finishFlows.contains(flowFragments.last()) && countChildFragments < 2) {
+            finish()
+            return
+        }
+
+        if (countChildFragments < 2 || currentFlowFragment == null) {
+            currentFlowFragment!!.removeLastScreen()
+            removeScreen(supportFragmentManager.findFragmentByTag(flowFragments.last()) as BaseFlowFragment)
+        } else {
+            super.onBackPressed()
         }
     }
 
@@ -115,5 +149,9 @@ class AppActivity : AppCompatActivity() {
         KTP.openScopes(Scopes.APPLICATION_SCOPE, Scopes.NET_SCOPE)
             .installModules(NetModule())
             .inject(this)
+    }
+
+    companion object {
+        private val finishFlows = listOf(Flows.TAB_CONTAINER.name, Flows.SPLASH.name)
     }
 }

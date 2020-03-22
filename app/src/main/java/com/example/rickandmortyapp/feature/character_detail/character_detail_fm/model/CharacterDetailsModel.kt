@@ -3,5 +3,6 @@ package com.example.rickandmortyapp.feature.character_detail.character_detail_fm
 import java.io.Serializable
 
 data class CharacterDetailsModel(
+    val name: String,
     val imageUrl: String
 ) : Serializable
