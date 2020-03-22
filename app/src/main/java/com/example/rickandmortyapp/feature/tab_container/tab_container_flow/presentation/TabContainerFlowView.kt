@@ -1,8 +1,10 @@
 package com.example.rickandmortyapp.feature.tab_container.tab_container_flow.presentation
 
-import com.arellomobile.mvp.MvpView
-import com.example.rickandmortyapp.core.base.FlowView
+import com.example.rickandmortyapp.Presentable
+import com.example.rickandmortyapp.navigation.NavigatorData
+import java.util.*
 
-interface TabContainerFlowView : FlowView {
-    fun navigateToScreen(screen: String, data: Any?)
+interface TabContainerFlowView : Presentable {
+    fun initRouter(fragmentsList: LinkedList<String>)
+    fun navigateToScreen(navigatorData: NavigatorData)
 }

@@ -1,10 +1,10 @@
 package com.example.rickandmortyapp.feature.splash.splash_flow.presentation
 
 import com.arellomobile.mvp.InjectViewState
-import com.example.rickandmortyapp.navigation.Flows
 import com.example.rickandmortyapp.core.base.BasePresenter
-import com.example.rickandmortyapp.navigation.AppNavigator
-import com.example.rickandmortyapp.navigation.SplashNavigator
+import com.example.rickandmortyapp.feature.splash.splash_flow.navigation.SplashNavigator
+import com.example.rickandmortyapp.navigation.*
+import java.util.*
 import javax.inject.Inject
 
 @InjectViewState
@@ -12,8 +12,12 @@ class SplashFlowPresenter @Inject constructor(
        private val appNavigator: AppNavigator,
        private val splashNavigator: SplashNavigator
 ) : BasePresenter<SplashFlowView>() {
+
+    var fragments: LinkedList<String> = LinkedList()
+
     override fun onFirstViewAttach() {
-        viewState.navigateToStartScreen()
+        viewState.initRouter(fragments)
+        viewState.navigateToScreen(NavigatorData(Command.Navigate, ScreenData(Flows.SPLASH.SPLASH)))
 
         splashNavigator.getData()
             .compose(schedulersTransformerObservable())

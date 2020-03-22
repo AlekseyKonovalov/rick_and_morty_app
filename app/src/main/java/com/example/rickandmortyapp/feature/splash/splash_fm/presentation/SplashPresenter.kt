@@ -2,6 +2,7 @@ package com.example.rickandmortyapp.feature.splash.splash_fm.presentation
 
 import com.arellomobile.mvp.InjectViewState
 import com.example.rickandmortyapp.core.base.BasePresenter
+import com.example.rickandmortyapp.feature.splash.splash_flow.navigation.SplashNavigator
 import com.example.rickandmortyapp.navigation.*
 import io.reactivex.Observable
 import timber.log.Timber

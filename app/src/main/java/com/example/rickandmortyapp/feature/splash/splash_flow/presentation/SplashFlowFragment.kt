@@ -7,44 +7,31 @@ import com.arellomobile.mvp.presenter.ProvidePresenter
 import com.example.rickandmortyapp.R
 import com.example.rickandmortyapp.core.base.BaseFlowFragment
 import com.example.rickandmortyapp.core.base.BaseFragment
+import com.example.rickandmortyapp.feature.splash.splash_flow.navigation.SplashRouter
 import com.example.rickandmortyapp.feature.splash.splash_fm.presentation.SplashFragment
+import com.example.rickandmortyapp.feature.tab_container.tab_container_flow.navigation.TabContainerRouter
 import com.example.rickandmortyapp.navigation.Flows
+import com.example.rickandmortyapp.navigation.NavigatorData
 import kotlinx.android.synthetic.main.character_details_fragment.*
 import java.util.*
 
 class SplashFlowFragment : BaseFlowFragment(), SplashFlowView {
 
-    override var fragments: LinkedList<String> = LinkedList()
-
     @InjectPresenter
     lateinit var presenter: SplashFlowPresenter
+    lateinit var router: SplashRouter
 
     @ProvidePresenter
     fun providePresenter() = scope.getInstance(SplashFlowPresenter::class.java)
 
-    override fun navigateToStartScreen(data: Any?) {
-        fragmentManager?.let {
-            val tag = Flows.SPLASH.SPLASH
-            fragments.add(tag)
-            it.beginTransaction()
-                .add(
-                    R.id.fragmentContainerView,
-                    SplashFragment.getInstance(),
-                    tag
-                )
-                .commit()
-        }
+    override fun getFragmentsList(): LinkedList<String> = presenter.fragments
+
+    override fun initRouter(fragmentsList: LinkedList<String>) {
+        router = SplashRouter(fragmentManager!!, R.id.fragmentContainerView, fragmentsList)
     }
 
-    override fun removeLastScreen() {
-        fragmentManager?.let { fm ->
-            val fragment = fm.findFragmentByTag(fragments.last()) ?: return@let
-            fragments.removeLast()
-            fm.beginTransaction()
-                .remove(fragment)
-                .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_CLOSE)
-                .commit()
-        }
+    override fun navigateToScreen(navigatorData: NavigatorData) {
+        router.chooseNavigation(navigatorData)
     }
 
     companion object {

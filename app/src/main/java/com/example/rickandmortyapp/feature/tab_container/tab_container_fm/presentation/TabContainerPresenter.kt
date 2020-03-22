@@ -2,7 +2,7 @@ package com.example.rickandmortyapp.feature.tab_container.tab_container_fm.prese
 
 import com.arellomobile.mvp.InjectViewState
 import com.example.rickandmortyapp.core.base.BasePresenter
-import com.example.rickandmortyapp.navigation.TabContainerNavigator
+import com.example.rickandmortyapp.feature.tab_container.tab_container_flow.navigation.TabContainerNavigator
 import javax.inject.Inject
 
 @InjectViewState

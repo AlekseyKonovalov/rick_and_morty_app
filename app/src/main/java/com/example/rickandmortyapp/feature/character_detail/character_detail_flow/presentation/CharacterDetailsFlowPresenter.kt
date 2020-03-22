@@ -2,11 +2,10 @@ package com.example.rickandmortyapp.feature.character_detail.character_detail_fl
 
 import com.arellomobile.mvp.InjectViewState
 import com.example.rickandmortyapp.core.base.BasePresenter
-import com.example.rickandmortyapp.feature.character_detail.character_detail_fm.model.CharacterDetailsModel
+import com.example.rickandmortyapp.feature.character_detail.character_detail_flow.navigation.CharacterDetailNavigator
 import com.example.rickandmortyapp.navigation.*
-import io.reactivex.android.schedulers.AndroidSchedulers
-import io.reactivex.schedulers.Schedulers
 import timber.log.Timber
+import java.util.*
 import javax.inject.Inject
 
 @InjectViewState
@@ -14,18 +13,20 @@ class CharacterDetailsFlowPresenter @Inject constructor(
     private val appNavigator: AppNavigator,
     private val characterDetailNavigator: CharacterDetailNavigator
 ) : BasePresenter<CharacterDetailsFlowView>() {
+
+    var fragments: LinkedList<String> = LinkedList()
+
     override fun onFirstViewAttach() {
-        viewState.navigateToStartScreen()
+        viewState.initRouter(fragments)
+        viewState.navigateToScreen(NavigatorData(Command.Navigate,
+            ScreenData(Flows.CHARACTER_DETAIL.SCREEN_CHARACTER_DETAIL)
+        ))
+
         characterDetailNavigator.getData()
             .compose(schedulersTransformerObservable())
             .subscribe( {
-                //todo refactoring
                 if (Flows.CHARACTER_DETAIL.screens.contains(it.screenData.screenName)){
-                    when(it.command ){
-                            Command.Remove -> {
-                                viewState.removeLastScreen()
-                            }
-                    }
+                    viewState.navigateToScreen(it)
                 } else {
                     appNavigator.emmitData(it)
                 }
