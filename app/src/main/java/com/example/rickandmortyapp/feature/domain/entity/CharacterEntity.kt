@@ -1,4 +1,5 @@
-package com.example.rickandmortyapp.feature.tab_container.characters.domain.entity
+package com.example.rickandmortyapp.feature.domain.entity
+
 
 data class CharacterEntity(
     val id: Int,
@@ -14,5 +15,11 @@ data class CharacterEntity(
     val imageUrl: String,
     val episodesList: List<String>,
     val url: String,
-    val createdDate: String
+    val createdDate: String,
+    val isFavorite: Boolean = false,
+    val rating: Rating = Rating.Neutral
 )
+
+enum class Rating {
+    Neutral, Positive, Negative
+}

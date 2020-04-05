@@ -1,17 +1,26 @@
 package com.example.rickandmortyapp.feature.character_detail.character_detail_fm.presentation
 
 import com.arellomobile.mvp.InjectViewState
-import com.example.rickandmortyapp.R
 import com.example.rickandmortyapp.core.ResourceProvider
 import com.example.rickandmortyapp.core.base.BasePresenter
 import com.example.rickandmortyapp.feature.character_detail.character_detail_flow.navigation.CharacterDetailNavigator
+import com.example.rickandmortyapp.feature.character_detail.character_detail_fm.mapper.ToCharacterEntityMapper
+import com.example.rickandmortyapp.feature.domain.CharactersInteractor
+import com.example.rickandmortyapp.feature.domain.entity.Rating
 import com.example.rickandmortyapp.feature.tab_container.characters.presentation.model.CharacterModel
+import com.example.rickandmortyapp.feature.tab_container.characters.presentation.model.UpdateCharacterBus
+import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.schedulers.Schedulers
+import timber.log.Timber
 import javax.inject.Inject
 
 @InjectViewState
 class CharacterDetailsPresenter @Inject constructor(
     private val characterDetailNavigator: CharacterDetailNavigator,
-    private val resourceProvider: ResourceProvider
+    private val resourceProvider: ResourceProvider,
+    private val updateCharacterBus: UpdateCharacterBus,
+    private val charactersInteractor: CharactersInteractor,
+    private val toCharacterEntityMapper: ToCharacterEntityMapper
 ) : BasePresenter<CharacterDetailsView>() {
 
     private lateinit var characterDetailsModel: CharacterModel
@@ -20,22 +29,50 @@ class CharacterDetailsPresenter @Inject constructor(
         this.characterDetailsModel = characterDetailsModel
         viewState.initViews(characterDetailsModel)
         viewState.updateFavoriteIcon(characterDetailsModel.isFavorite)
+
+        updateRating()
+    }
+
+    private fun updateRating() {
+        when (characterDetailsModel.rating) {
+            Rating.Neutral -> {
+                viewState.setThumbInactive()
+            }
+            Rating.Positive -> {
+                viewState.setThumbUpActive()
+            }
+            Rating.Negative -> {
+                viewState.setThumbDownActive()
+            }
+        }
     }
 
     fun onThumbUpClick() {
-        //todo save to db
-        viewState.setThumbUpActive()
+        characterDetailsModel = characterDetailsModel.copy(rating = Rating.Positive)
+        saveItem()
+
+        updateRating()
     }
 
     fun onThumbDownClick() {
-        //todo save to db
-        viewState.setThumbDownActive()
+        characterDetailsModel = characterDetailsModel.copy(rating = Rating.Negative)
+        saveItem()
+        updateRating()
     }
 
-    fun onOnFavoriteIconClick(){
-        //todo update subject
+    fun onOnFavoriteIconClick() {
         characterDetailsModel = characterDetailsModel.copy(isFavorite = !characterDetailsModel.isFavorite)
+        saveItem()
         viewState.updateFavoriteIcon(characterDetailsModel.isFavorite)
+    }
+
+    private fun saveItem() {
+        updateCharacterBus.emmitData(characterDetailsModel)
+        charactersInteractor.saveCharacter(toCharacterEntityMapper.mapToEntity(characterDetailsModel))
+            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribe({}, { Timber.e(it) })
+            .addToFullLifeCycle()
     }
 
 }

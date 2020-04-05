@@ -1,5 +1,6 @@
 package com.example.rickandmortyapp.feature.tab_container.characters.presentation.model
 
+import com.example.rickandmortyapp.feature.domain.entity.Rating
 import java.io.Serializable
 
 data class CharacterModel (
@@ -17,5 +18,6 @@ data class CharacterModel (
     val episodesList: List<String>,
     val url: String,
     val createdDate: String,
-    val isFavorite: Boolean = false
+    val isFavorite: Boolean = false,
+    val rating: Rating = Rating.Neutral
 ): Serializable

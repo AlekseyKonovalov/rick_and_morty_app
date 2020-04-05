@@ -3,10 +3,14 @@ package com.example.rickandmortyapp.feature.tab_container.characters.presentatio
 import RxDecor
 import com.arellomobile.mvp.InjectViewState
 import com.example.rickandmortyapp.core.base.BasePresenter
-import com.example.rickandmortyapp.feature.tab_container.characters.domain.CharactersInteractor
+import com.example.rickandmortyapp.feature.character_detail.character_detail_fm.mapper.ToCharacterEntityMapper
+import com.example.rickandmortyapp.feature.domain.CharactersInteractor
 import com.example.rickandmortyapp.feature.tab_container.characters.presentation.mapper.FromCharacterEntityMapper
+import com.example.rickandmortyapp.feature.tab_container.characters.presentation.model.UpdateCharacterBus
 import com.example.rickandmortyapp.feature.tab_container.characters.presentation.model.CharacterModel
 import com.example.rickandmortyapp.navigation.*
+import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.schedulers.Schedulers
 import timber.log.Timber
 import javax.inject.Inject
 
@@ -14,7 +18,9 @@ import javax.inject.Inject
 class CharactersPresenter @Inject constructor(
     private val charactersInteractor: CharactersInteractor,
     private val fromCharacterEntityMapper: FromCharacterEntityMapper,
-    private val appNavigator: AppNavigator
+    private val appNavigator: AppNavigator,
+    private val updateCharacterBus: UpdateCharacterBus,
+    private val toCharacterEntityMapper: ToCharacterEntityMapper
 ) : BasePresenter<CharactersView>() {
 
     private var charactersList: MutableList<CharacterModel> = mutableListOf()
@@ -24,6 +30,20 @@ class CharactersPresenter @Inject constructor(
         viewState.initListeners()
         viewState.initAdapter()
         viewState.updateCharacterSubscription(paginationSize = PAGINATION_SIZE)
+
+        updateCharacterBus.getData()
+            .compose(schedulersTransformerObservable())
+            .subscribe({ character ->
+                val index = charactersList.indexOf(charactersList.first { it.id == character.id })
+                charactersList[index] = charactersList[index].copy(
+                    isFavorite = character.isFavorite,
+                    rating = character.rating
+                )
+                viewState.setItems(charactersList)
+            }, {
+                Timber.e(it)
+            })
+            .addToFullLifeCycle()
     }
 
     fun onPageScrolled() {
@@ -65,6 +85,11 @@ class CharactersPresenter @Inject constructor(
         val indexItem = charactersList.indexOf(item)
         if (indexItem == -1) return
         charactersList[indexItem] = item.copy(isFavorite = !item.isFavorite)
+        charactersInteractor.saveCharacter(toCharacterEntityMapper.mapToEntity(charactersList[indexItem]))
+            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribe({}, { Timber.e(it) })
+            .addToFullLifeCycle()
         viewState.setItems(charactersList)
     }
 

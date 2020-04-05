@@ -8,7 +8,10 @@ import com.example.rickandmortyapp.feature.tab_container.characters.presentation
 @StateStrategyType(AddToEndSingleStrategy::class)
 interface CharacterDetailsView : Presentable {
     fun initViews(data: CharacterModel)
+
     fun setThumbDownActive()
     fun setThumbUpActive()
+    fun setThumbInactive()
+
     fun updateFavoriteIcon(isFavorite: Boolean)
 }

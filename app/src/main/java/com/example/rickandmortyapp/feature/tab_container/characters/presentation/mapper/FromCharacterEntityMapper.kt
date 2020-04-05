@@ -1,6 +1,6 @@
 package com.example.rickandmortyapp.feature.tab_container.characters.presentation.mapper
 
-import com.example.rickandmortyapp.feature.tab_container.characters.domain.entity.CharacterEntity
+import com.example.rickandmortyapp.feature.domain.entity.CharacterEntity
 import com.example.rickandmortyapp.feature.tab_container.characters.presentation.model.CharacterModel
 import javax.inject.Inject
 
@@ -40,7 +40,9 @@ class FromCharacterEntityMapper @Inject constructor() {
                     imageUrl = characterEntity.imageUrl,
                     episodesList = characterEntity.episodesList,
                     url = characterEntity.url,
-                    createdDate = characterEntity.createdDate
+                    createdDate = characterEntity.createdDate,
+                    isFavorite = characterEntity.isFavorite,
+                    rating = characterEntity.rating
                 )
             )
         }

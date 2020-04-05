@@ -13,7 +13,7 @@ class CharactersDiffCallback(
     }
 
     override fun areContentsTheSame(oldItem: CharacterModel, newItem: CharacterModel): Boolean {
-        return oldItem.isFavorite == newItem.isFavorite
+        return oldItem.isFavorite == newItem.isFavorite && oldItem.rating == newItem.rating
     }
 
 }

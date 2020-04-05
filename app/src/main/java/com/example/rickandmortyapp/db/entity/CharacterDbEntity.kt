@@ -10,5 +10,7 @@ data class CharacterDbEntity(
     @NonNull
     @PrimaryKey
     @ColumnInfo
-    val id: Int
+    val id: Int,
+    val isFavorite: Boolean,
+    val rating: String
 )

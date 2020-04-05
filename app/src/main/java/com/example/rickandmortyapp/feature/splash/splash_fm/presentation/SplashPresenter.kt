@@ -15,7 +15,7 @@ class SplashPresenter @Inject constructor(
 ) : BasePresenter<SplashView>() {
     override fun onFirstViewAttach() {
         Observable.just("")
-            .delay(3, TimeUnit.SECONDS)
+            .delay(1, TimeUnit.SECONDS)
             .compose(schedulersTransformerObservable())
             .subscribe(
                 {

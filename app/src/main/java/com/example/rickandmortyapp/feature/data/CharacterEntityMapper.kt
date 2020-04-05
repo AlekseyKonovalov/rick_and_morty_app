@@ -1,11 +1,13 @@
-package com.example.rickandmortyapp.feature.tab_container.characters.data
+package com.example.rickandmortyapp.feature.data
 
-import com.example.rickandmortyapp.feature.tab_container.characters.domain.entity.CharacterEntity
+import com.example.rickandmortyapp.db.entity.CharacterDbEntity
+import com.example.rickandmortyapp.feature.domain.entity.CharacterEntity
+import com.example.rickandmortyapp.feature.domain.entity.Rating
 import com.example.rickandmortyapp.network.responses.CharacterResponse
 import javax.inject.Inject
 
-class ToCharacterEntityMapper @Inject constructor() {
-    fun map(characterResponse: CharacterResponse): List<CharacterEntity> {
+class CharacterEntityMapper @Inject constructor() {
+    fun mapToEntity(characterResponse: CharacterResponse): List<CharacterEntity> {
         val charactersList = mutableListOf<CharacterEntity>()
         characterResponse.results.forEach {
             charactersList.add(
@@ -28,5 +30,21 @@ class ToCharacterEntityMapper @Inject constructor() {
             )
         }
         return charactersList
+    }
+
+    fun mapFromEntityToDBEntity(characterEntity: CharacterEntity): CharacterDbEntity {
+        return CharacterDbEntity(
+            characterEntity.id,
+            characterEntity.isFavorite,
+            characterEntity.rating.toString()
+        )
+    }
+
+    fun mapRating(rating: String): Rating {
+        return when (rating) {
+            "Positive" -> Rating.Positive
+            "Negative" -> Rating.Negative
+            else -> Rating.Neutral
+        }
     }
 }

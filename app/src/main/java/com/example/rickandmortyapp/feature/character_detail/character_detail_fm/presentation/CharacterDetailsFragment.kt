@@ -87,6 +87,13 @@ class CharacterDetailsFragment : BaseFragment(), CharacterDetailsView {
         )
     }
 
+    override fun setThumbInactive() {
+        setRateViewColors(
+            thumbDownColor = R.color.colorMiddleGray,
+            thumbUpColor = R.color.colorMiddleGray
+        )
+    }
+
     private fun setRateViewColors(thumbUpColor: Int, thumbDownColor: Int) {
         thumb_down.setColorFilter(
             ContextCompat.getColor(
