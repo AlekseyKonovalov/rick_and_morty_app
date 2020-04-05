@@ -32,7 +32,7 @@ class CharacterDetailsFragment : BaseFragment(), CharacterDetailsView {
 
     override fun initViews(data: CharacterDetailsModel) {
         main_toolbar.setNavigationOnClickListener {
-            presenter.onBackPressed()
+           requireActivity().onBackPressed()
         }
         main_appbar.setTitle(main_collapsing, data.name)
         Glide.with(requireContext())

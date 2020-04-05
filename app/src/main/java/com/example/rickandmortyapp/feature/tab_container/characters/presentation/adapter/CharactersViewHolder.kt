@@ -14,20 +14,23 @@ class CharactersViewHolder(
 ) : BindedViewHolder<CharacterModel>(view) {
     override fun bind(data: CharacterModel) {
         with(view) {
+
+            item_container.setOnClickListener {
+                if (hasPosition) onItemClick.invoke(data)
+            }
+
             item_character_name.text = data.name
             favorite.setImageDrawable(
                 if (data.isFavorite) context.getDrawable(R.drawable.ic_favorite)
                 else context.getDrawable(R.drawable.ic_favorite_inactive)
             )
             favorite.setOnClickListener {
-                if (hasPosition) onItemClick.invoke(data)
+                if (hasPosition) onFavoriteClick.invoke(data)
             }
             Glide.with(context)
                 .load(data.imageUrl)
                 .into(view.item_image)
-            item_container.setOnClickListener {
-                if (hasPosition) onItemClick.invoke(data)
-            }
+
         }
     }
 

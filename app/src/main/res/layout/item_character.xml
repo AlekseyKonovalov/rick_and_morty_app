@@ -14,17 +14,13 @@
         android:id="@+id/item_container"
         android:layout_width="180dp"
         android:layout_height="wrap_content"
-        android:clickable="true"
-        android:focusable="true"
+        android:foreground="?android:attr/selectableItemBackgroundBorderless"
         app:cardCornerRadius="8dp"
         app:cardElevation="2dp">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:clickable="true"
-            android:focusable="true"
-            android:foreground="?android:attr/selectableItemBackgroundBorderless">
+            android:layout_height="match_parent">
 
             <ImageView
                 android:id="@+id/item_image"

@@ -1,9 +1,7 @@
 package com.example.rickandmortyapp.navigation
 
 import androidx.fragment.app.FragmentManager
-import androidx.fragment.app.FragmentTransaction
 import com.example.rickandmortyapp.core.base.BaseFlowFragment
-import com.example.rickandmortyapp.core.base.BaseFragment
 import com.example.rickandmortyapp.feature.character_detail.character_detail_flow.presentation.CharacterDetailsFlowFragment
 import com.example.rickandmortyapp.feature.character_detail.character_detail_fm.model.CharacterDetailsModel
 import com.example.rickandmortyapp.feature.splash.splash_flow.presentation.SplashFlowFragment
@@ -50,7 +48,7 @@ class AppRouter(
                 replaceScreen(flowFragment, tag)
             }
             Command.Remove -> {
-                removeScreen(flowFragment)
+                removeScreen()
             }
         }
     }

@@ -30,12 +30,8 @@ abstract class BaseRouter(
     }
 
 
-    protected fun removeScreen(fragment: BaseFragment) {
+    protected fun removeScreen() {
         fragments.removeLast()
-        fragmentManager.beginTransaction()
-            .remove(fragment)
-            .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_CLOSE)
-            .commit()
         fragmentManager.popBackStack()
     }
 

@@ -3,10 +3,6 @@ package com.example.rickandmortyapp.feature.tab_container.tab_container_flow.nav
 import androidx.fragment.app.FragmentManager
 import com.example.rickandmortyapp.core.base.BaseFlowFragment
 import com.example.rickandmortyapp.core.base.BaseFragment
-import com.example.rickandmortyapp.feature.character_detail.character_detail_flow.presentation.CharacterDetailsFlowFragment
-import com.example.rickandmortyapp.feature.character_detail.character_detail_fm.model.CharacterDetailsModel
-import com.example.rickandmortyapp.feature.splash.splash_flow.presentation.SplashFlowFragment
-import com.example.rickandmortyapp.feature.tab_container.tab_container_flow.presentation.TabContainerFlowFragment
 import com.example.rickandmortyapp.feature.tab_container.tab_container_fm.presentation.TabContainerFragment
 import com.example.rickandmortyapp.navigation.BaseRouter
 import com.example.rickandmortyapp.navigation.Command
@@ -43,7 +39,7 @@ class TabContainerRouter(
                 replaceScreen(fragment, tag)
             }
             Command.Remove -> {
-                removeScreen(fragment)
+                removeScreen()
             }
         }
     }

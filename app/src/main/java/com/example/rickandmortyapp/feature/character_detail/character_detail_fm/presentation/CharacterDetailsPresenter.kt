@@ -19,10 +19,4 @@ class CharacterDetailsPresenter @Inject constructor(
         viewState.initViews(characterDetailsModel)
     }
 
-
-    fun onBackPressed() {
-        characterDetailNavigator.emmitData(
-            NavigatorData(Command.Remove, ScreenData(Flows.CHARACTER_DETAIL.SCREEN_CHARACTER_DETAIL))
-        )
-    }
 }
