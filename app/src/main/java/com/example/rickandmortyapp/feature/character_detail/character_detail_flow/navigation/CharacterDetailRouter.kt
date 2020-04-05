@@ -2,8 +2,8 @@ package com.example.rickandmortyapp.feature.character_detail.character_detail_fl
 
 import androidx.fragment.app.FragmentManager
 import com.example.rickandmortyapp.core.base.BaseFragment
-import com.example.rickandmortyapp.feature.character_detail.character_detail_fm.model.CharacterDetailsModel
 import com.example.rickandmortyapp.feature.character_detail.character_detail_fm.presentation.CharacterDetailsFragment
+import com.example.rickandmortyapp.feature.tab_container.characters.presentation.model.CharacterModel
 import com.example.rickandmortyapp.navigation.BaseRouter
 import com.example.rickandmortyapp.navigation.Command
 import com.example.rickandmortyapp.navigation.Flows
@@ -24,7 +24,7 @@ class CharacterDetailRouter(
             Flows.CHARACTER_DETAIL.SCREEN_CHARACTER_DETAIL  -> {
                 tag =  Flows.CHARACTER_DETAIL.SCREEN_CHARACTER_DETAIL
                 fragment = if (navigatorData.command != Command.Remove)
-                    CharacterDetailsFragment.getInstance(navigatorData.screenData.data as CharacterDetailsModel) else
+                    CharacterDetailsFragment.getInstance(navigatorData.screenData.data as CharacterModel) else
                     fragmentManager.findFragmentByTag(tag) as BaseFragment?
             }
             else -> return

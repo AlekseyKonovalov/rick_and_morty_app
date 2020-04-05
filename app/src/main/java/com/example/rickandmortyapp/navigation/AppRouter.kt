@@ -3,8 +3,8 @@ package com.example.rickandmortyapp.navigation
 import androidx.fragment.app.FragmentManager
 import com.example.rickandmortyapp.core.base.BaseFlowFragment
 import com.example.rickandmortyapp.feature.character_detail.character_detail_flow.presentation.CharacterDetailsFlowFragment
-import com.example.rickandmortyapp.feature.character_detail.character_detail_fm.model.CharacterDetailsModel
 import com.example.rickandmortyapp.feature.splash.splash_flow.presentation.SplashFlowFragment
+import com.example.rickandmortyapp.feature.tab_container.characters.presentation.model.CharacterModel
 import com.example.rickandmortyapp.feature.tab_container.tab_container_flow.presentation.TabContainerFlowFragment
 import java.util.*
 
@@ -32,7 +32,7 @@ class AppRouter(
             Flows.CHARACTER_DETAIL.name -> {
                 tag = Flows.CHARACTER_DETAIL.name
                 flowFragment =
-                    if (navigatorData.command != Command.Remove) CharacterDetailsFlowFragment.getInstance(navigatorData.screenData.data as CharacterDetailsModel)
+                    if (navigatorData.command != Command.Remove) CharacterDetailsFlowFragment.getInstance(navigatorData.screenData.data as CharacterModel)
                     else fragmentManager.findFragmentByTag(tag) as BaseFlowFragment?
             }
             else -> return

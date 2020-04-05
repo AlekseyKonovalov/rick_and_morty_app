@@ -3,7 +3,6 @@ package com.example.rickandmortyapp.feature.tab_container.characters.presentatio
 import RxDecor
 import com.arellomobile.mvp.InjectViewState
 import com.example.rickandmortyapp.core.base.BasePresenter
-import com.example.rickandmortyapp.feature.character_detail.character_detail_fm.model.CharacterDetailsModel
 import com.example.rickandmortyapp.feature.tab_container.characters.domain.CharactersInteractor
 import com.example.rickandmortyapp.feature.tab_container.characters.presentation.mapper.FromCharacterEntityMapper
 import com.example.rickandmortyapp.feature.tab_container.characters.presentation.model.CharacterModel
@@ -56,7 +55,7 @@ class CharactersPresenter @Inject constructor(
                 Command.Navigate,
                 ScreenData(
                     Flows.CHARACTER_DETAIL.name,
-                    CharacterDetailsModel(item.name, item.imageUrl)
+                    item
                 )
             )
         )

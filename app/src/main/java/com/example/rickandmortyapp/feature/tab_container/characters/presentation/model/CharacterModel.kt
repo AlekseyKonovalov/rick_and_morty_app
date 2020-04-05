@@ -1,5 +1,7 @@
 package com.example.rickandmortyapp.feature.tab_container.characters.presentation.model
 
+import java.io.Serializable
+
 data class CharacterModel (
     val id: Int,
     val name: String,
@@ -16,4 +18,4 @@ data class CharacterModel (
     val url: String,
     val createdDate: String,
     val isFavorite: Boolean = false
-)
+): Serializable

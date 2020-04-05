@@ -4,12 +4,7 @@ import com.arellomobile.mvp.presenter.InjectPresenter
 import com.arellomobile.mvp.presenter.ProvidePresenter
 import com.example.rickandmortyapp.R
 import com.example.rickandmortyapp.core.base.BaseFlowFragment
-import com.example.rickandmortyapp.core.base.BaseFragment
-import com.example.rickandmortyapp.feature.character_detail.character_detail_fm.model.CharacterDetailsModel
-import com.example.rickandmortyapp.feature.character_detail.character_detail_fm.presentation.CharacterDetailsFragment
 import com.example.rickandmortyapp.feature.tab_container.tab_container_flow.navigation.TabContainerRouter
-import com.example.rickandmortyapp.feature.tab_container.tab_container_fm.presentation.TabContainerFragment
-import com.example.rickandmortyapp.navigation.Flows
 import com.example.rickandmortyapp.navigation.NavigatorData
 import java.util.*
 

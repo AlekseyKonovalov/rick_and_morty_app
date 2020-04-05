@@ -6,7 +6,7 @@ import com.arellomobile.mvp.presenter.ProvidePresenter
 import com.example.rickandmortyapp.R
 import com.example.rickandmortyapp.core.base.BaseFlowFragment
 import com.example.rickandmortyapp.feature.character_detail.character_detail_flow.navigation.CharacterDetailRouter
-import com.example.rickandmortyapp.feature.character_detail.character_detail_fm.model.CharacterDetailsModel
+import com.example.rickandmortyapp.feature.tab_container.characters.presentation.model.CharacterModel
 import com.example.rickandmortyapp.navigation.Command
 import com.example.rickandmortyapp.navigation.Flows
 import com.example.rickandmortyapp.navigation.NavigatorData
@@ -34,7 +34,7 @@ class CharacterDetailsFlowFragment : BaseFlowFragment(), CharacterDetailsFlowVie
         if (navigatorData.screenData.screenName == Flows.CHARACTER_DETAIL.SCREEN_CHARACTER_DETAIL
             || navigatorData.command == Command.Navigate
         ) {
-            val arg = arguments!!.getSerializable(key) as CharacterDetailsModel
+            val arg = arguments!!.getSerializable(key) as CharacterModel
             router.chooseNavigation(
                 navigatorData.copy(
                     screenData = ScreenData(
@@ -56,7 +56,7 @@ class CharacterDetailsFlowFragment : BaseFlowFragment(), CharacterDetailsFlowVie
     companion object {
         private const val key = "CharacterDetailsModel"
 
-        fun getInstance(arg: CharacterDetailsModel): CharacterDetailsFlowFragment {
+        fun getInstance(arg: CharacterModel): CharacterDetailsFlowFragment {
             return CharacterDetailsFlowFragment().apply {
                 arguments = Bundle().apply {
                     putSerializable(key, arg)

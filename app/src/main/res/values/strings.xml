@@ -6,4 +6,13 @@
     <string name="menu_title_characters">Персонажи</string>
     <string name="menu_title_profile">Профиль</string>
 
+
+    <string name="ch_details_current_location">Текущая локация</string>
+    <string name="ch_details_origin_location">Место рождения</string>
+    <string name="ch_details_status">Статус</string>
+    <string name="ch_details_species">Раса</string>
+    <string name="ch_details_gender">Пол</string>
+    <string name="ch_details_name">Имя</string>
+    <string name="ch_details_rate_person">Оцените персонажа</string>
+
 </resources>
