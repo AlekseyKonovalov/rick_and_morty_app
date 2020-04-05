@@ -26,12 +26,7 @@ class TabContainerFragment : BaseFragment(), TabContainerView {
     @ProvidePresenter
     fun providePresenter() = scope.getInstance(TabContainerPresenter::class.java)
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-        initListeners()
-    }
-
-    private fun initListeners() {
+    override fun initListeners() {
         navigation_bar.setOnNavigationItemSelectedListener { menuItem ->
             SCREENS.find { it.resId == menuItem.itemId }?.name?.let {
                 presenter.onClickTab(it)
@@ -45,15 +40,13 @@ class TabContainerFragment : BaseFragment(), TabContainerView {
     }
 
     private fun openFragment(keyFragment: String) {
-        val transaction = fragmentManager?.beginTransaction() ?: return
-        with(transaction) {
-            replace(
+        childFragmentManager.beginTransaction()
+            .replace(
                 R.id.tab_fragments_container,
                 SCREENS.find { it.name == keyFragment }?.fragment as Fragment
             )
-            addToBackStack(null)
-            commit()
-        }
+            .addToBackStack(null)
+            .commit()
     }
 
     companion object {

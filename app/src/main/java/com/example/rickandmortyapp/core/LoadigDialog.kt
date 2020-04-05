@@ -48,7 +48,7 @@ class LoadingDialog : DialogFragment() {
         }
 
         fun view(fragment: androidx.fragment.app.Fragment, tag: String): LoadingView {
-            return view(fragment.fragmentManager!!, tag)
+            return view(fragment.childFragmentManager, tag)
         }
     }
 }

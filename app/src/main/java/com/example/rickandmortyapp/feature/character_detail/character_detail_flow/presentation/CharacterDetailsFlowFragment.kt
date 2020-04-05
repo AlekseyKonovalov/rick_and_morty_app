@@ -26,7 +26,7 @@ class CharacterDetailsFlowFragment : BaseFlowFragment(), CharacterDetailsFlowVie
     override fun getFragmentsList() = presenter.fragments
 
     override fun initRouter(fragmentsList: LinkedList<String>) {
-        router = CharacterDetailRouter(fragmentManager!!, R.id.fragmentContainerView, fragmentsList)
+        router = CharacterDetailRouter(childFragmentManager, R.id.fragmentContainerView, fragmentsList)
     }
 
     override fun chooseNavigationAction(navigatorData: NavigatorData) {

@@ -27,7 +27,7 @@ class SplashFlowFragment : BaseFlowFragment(), SplashFlowView {
     override fun getFragmentsList(): LinkedList<String> = presenter.fragments
 
     override fun initRouter(fragmentsList: LinkedList<String>) {
-        router = SplashRouter(fragmentManager!!, R.id.fragmentContainerView, fragmentsList)
+        router = SplashRouter(childFragmentManager, R.id.fragmentContainerView, fragmentsList)
     }
 
     override fun chooseNavigationAction(navigatorData: NavigatorData) {

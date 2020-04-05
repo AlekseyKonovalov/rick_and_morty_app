@@ -20,7 +20,7 @@ class TabContainerFlowFragment : BaseFlowFragment(), TabContainerFlowView {
     override fun getFragmentsList() = presenter.fragments
 
     override fun initRouter(fragmentsList: LinkedList<String>) {
-        router = TabContainerRouter(fragmentManager!!, R.id.fragmentContainerView, fragmentsList)
+        router = TabContainerRouter(childFragmentManager, R.id.fragmentContainerView, fragmentsList)
     }
 
     override fun chooseNavigationAction(navigatorData: NavigatorData) {

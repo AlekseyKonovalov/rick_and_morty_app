@@ -12,6 +12,7 @@ class TabContainerPresenter @Inject constructor(
 
     override fun onFirstViewAttach() {
         viewState.setFragment(TabContainerFragment.CHARACTERS)
+        viewState.initListeners()
     }
 
     fun onClickTab(keyFragment: String) {

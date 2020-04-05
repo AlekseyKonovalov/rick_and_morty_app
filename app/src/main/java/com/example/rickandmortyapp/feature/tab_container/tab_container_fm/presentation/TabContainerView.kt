@@ -4,4 +4,5 @@ import com.arellomobile.mvp.MvpView
 
 interface TabContainerView : MvpView {
     fun setFragment(keyFragment: String)
+    fun initListeners()
 }
