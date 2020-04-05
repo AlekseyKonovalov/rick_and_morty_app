@@ -30,7 +30,7 @@ class SplashFlowFragment : BaseFlowFragment(), SplashFlowView {
         router = SplashRouter(fragmentManager!!, R.id.fragmentContainerView, fragmentsList)
     }
 
-    override fun navigateToScreen(navigatorData: NavigatorData) {
+    override fun chooseNavigationAction(navigatorData: NavigatorData) {
         router.chooseNavigation(navigatorData)
     }
 

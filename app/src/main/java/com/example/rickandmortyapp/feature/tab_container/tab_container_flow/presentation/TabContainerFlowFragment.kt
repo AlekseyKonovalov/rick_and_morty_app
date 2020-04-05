@@ -28,7 +28,7 @@ class TabContainerFlowFragment : BaseFlowFragment(), TabContainerFlowView {
         router = TabContainerRouter(fragmentManager!!, R.id.fragmentContainerView, fragmentsList)
     }
 
-    override fun navigateToScreen(navigatorData: NavigatorData) {
+    override fun chooseNavigationAction(navigatorData: NavigatorData) {
         router.chooseNavigation(navigatorData)
     }
 

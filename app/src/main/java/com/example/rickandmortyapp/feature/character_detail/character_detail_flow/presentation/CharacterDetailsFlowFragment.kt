@@ -29,7 +29,7 @@ class CharacterDetailsFlowFragment : BaseFlowFragment(), CharacterDetailsFlowVie
         router = CharacterDetailRouter(fragmentManager!!, R.id.fragmentContainerView, fragmentsList)
     }
 
-    override fun navigateToScreen(navigatorData: NavigatorData) {
+    override fun chooseNavigationAction(navigatorData: NavigatorData) {
         // todo refactor
         if (navigatorData.screenData.screenName == Flows.CHARACTER_DETAIL.SCREEN_CHARACTER_DETAIL
             || navigatorData.command == Command.Navigate

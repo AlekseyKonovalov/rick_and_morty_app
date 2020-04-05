@@ -17,7 +17,7 @@ class TabContainerFlowPresenter @Inject constructor(
 
     override fun onFirstViewAttach() {
         viewState.initRouter(fragments)
-        viewState.navigateToScreen(NavigatorData(Command.Navigate, ScreenData(Flows.TAB_CONTAINER.TAB_CONTAINER)))
+        viewState.chooseNavigationAction(NavigatorData(Command.Navigate, ScreenData(Flows.TAB_CONTAINER.TAB_CONTAINER)))
     }
 
 }

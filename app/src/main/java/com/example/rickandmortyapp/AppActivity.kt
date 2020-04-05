@@ -59,21 +59,24 @@ class AppActivity : AppCompatActivity() {
                 as? BaseFlowFragment)
         val countChildFragments = currentFlowFragment?.getFragmentsList()?.size ?: 0
 
-        if (finishFlows.contains(flowFragments.last()) && countChildFragments < 2) {
-            finish()
-            return
-        }
-
-        if (countChildFragments < 2 || currentFlowFragment == null) {
-            currentFlowFragment!!.navigateToScreen(
-                NavigatorData(
-                    Command.Remove,
-                    ScreenData(currentFlowFragment.getFragmentsList().last())
+        when {
+            finishFlows.contains(flowFragments.last()) && countChildFragments < 2 -> {
+                finish()
+            }
+            countChildFragments < 2 && currentFlowFragment != null -> {
+                router.chooseNavigation(NavigatorData(Command.Remove, ScreenData(flowFragments.last())))
+            }
+            countChildFragments >= 2 && currentFlowFragment != null -> {
+                currentFlowFragment.chooseNavigationAction(
+                    NavigatorData(
+                        Command.Remove,
+                        ScreenData(currentFlowFragment.getFragmentsList().last())
+                    )
                 )
-            )
-            router.chooseNavigation(NavigatorData(Command.Remove, ScreenData(flowFragments.last())))
-        } else {
-            super.onBackPressed()
+            }
+            else -> {
+                super.onBackPressed()
+            }
         }
     }
 

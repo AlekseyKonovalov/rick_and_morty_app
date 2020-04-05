@@ -18,7 +18,7 @@ class CharacterDetailsFlowPresenter @Inject constructor(
 
     override fun onFirstViewAttach() {
         viewState.initRouter(fragments)
-        viewState.navigateToScreen(NavigatorData(Command.Navigate,
+        viewState.chooseNavigationAction(NavigatorData(Command.Navigate,
             ScreenData(Flows.CHARACTER_DETAIL.SCREEN_CHARACTER_DETAIL)
         ))
 
@@ -26,7 +26,7 @@ class CharacterDetailsFlowPresenter @Inject constructor(
             .compose(schedulersTransformerObservable())
             .subscribe( {
                 if (Flows.CHARACTER_DETAIL.screens.contains(it.screenData.screenName)){
-                    viewState.navigateToScreen(it)
+                    viewState.chooseNavigationAction(it)
                 } else {
                     appNavigator.emmitData(it)
                 }

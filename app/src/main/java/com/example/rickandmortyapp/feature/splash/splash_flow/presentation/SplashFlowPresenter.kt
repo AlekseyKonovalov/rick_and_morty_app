@@ -17,7 +17,7 @@ class SplashFlowPresenter @Inject constructor(
 
     override fun onFirstViewAttach() {
         viewState.initRouter(fragments)
-        viewState.navigateToScreen(NavigatorData(Command.Navigate, ScreenData(Flows.SPLASH.SPLASH)))
+        viewState.chooseNavigationAction(NavigatorData(Command.Navigate, ScreenData(Flows.SPLASH.SPLASH)))
 
         splashNavigator.getData()
             .compose(schedulersTransformerObservable())
