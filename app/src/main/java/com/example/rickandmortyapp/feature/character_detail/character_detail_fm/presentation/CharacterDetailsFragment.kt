@@ -2,8 +2,6 @@ package com.example.rickandmortyapp.feature.character_detail.character_detail_fm
 
 import android.os.Bundle
 import android.view.*
-import android.widget.ImageView
-import androidx.appcompat.view.menu.MenuBuilder
 import androidx.core.content.ContextCompat
 import com.arellomobile.mvp.presenter.InjectPresenter
 import com.arellomobile.mvp.presenter.ProvidePresenter
@@ -11,7 +9,7 @@ import com.bumptech.glide.Glide
 import com.example.rickandmortyapp.R
 import com.example.rickandmortyapp.core.base.BaseFragment
 import com.example.rickandmortyapp.core.setTitle
-import com.example.rickandmortyapp.feature.tab_container.characters.presentation.model.CharacterModel
+import com.example.rickandmortyapp.feature.characters.characters_fm.presentation.model.CharacterModel
 import kotlinx.android.synthetic.main.character_details_fragment.*
 
 

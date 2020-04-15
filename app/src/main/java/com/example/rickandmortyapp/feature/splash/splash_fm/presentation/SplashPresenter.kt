@@ -23,7 +23,7 @@ class SplashPresenter @Inject constructor(
                         NavigatorData(
                             Command.Replace,
                             ScreenData(
-                                Flows.TAB_CONTAINER.name
+                                Flows.CHARACTERS.name
                             )
                         )
                     )

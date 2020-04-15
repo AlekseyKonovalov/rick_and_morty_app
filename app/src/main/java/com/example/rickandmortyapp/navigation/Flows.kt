@@ -13,11 +13,11 @@ object Flows {
         val screens = listOf(SPLASH)
     }
 
-    object TAB_CONTAINER : Flow("TAB_CONTAINER_FLOW") {
+    object CHARACTERS : Flow("CHARACTERS") {
 
-        const val TAB_CONTAINER = "TAB_CONTAINER"
+        const val CHARACTERS = "CHARACTERS"
 
-        val screens = listOf(TAB_CONTAINER)
+        val screens = listOf(CHARACTERS)
     }
 
     object  CHARACTER_DETAIL: Flow("CHARACTER_DETAIL_FLOW") {

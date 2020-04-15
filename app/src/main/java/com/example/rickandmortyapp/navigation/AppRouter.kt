@@ -4,8 +4,8 @@ import androidx.fragment.app.FragmentManager
 import com.example.rickandmortyapp.core.base.BaseFlowFragment
 import com.example.rickandmortyapp.feature.character_detail.character_detail_flow.presentation.CharacterDetailsFlowFragment
 import com.example.rickandmortyapp.feature.splash.splash_flow.presentation.SplashFlowFragment
-import com.example.rickandmortyapp.feature.tab_container.characters.presentation.model.CharacterModel
-import com.example.rickandmortyapp.feature.tab_container.tab_container_flow.presentation.TabContainerFlowFragment
+import com.example.rickandmortyapp.feature.characters.characters_fm.presentation.model.CharacterModel
+import com.example.rickandmortyapp.feature.characters.characters_flow.presentation.CharactersFlowFragment
 import java.util.*
 
 class AppRouter(
@@ -24,9 +24,9 @@ class AppRouter(
                 flowFragment = if (navigatorData.command != Command.Remove) SplashFlowFragment.getInstance() else
                     fragmentManager.findFragmentByTag(tag) as BaseFlowFragment?
             }
-            Flows.TAB_CONTAINER.name -> {
-                tag = Flows.TAB_CONTAINER.name
-                flowFragment = if (navigatorData.command != Command.Remove) TabContainerFlowFragment() else
+            Flows.CHARACTERS.name -> {
+                tag = Flows.CHARACTERS.name
+                flowFragment = if (navigatorData.command != Command.Remove) CharactersFlowFragment() else
                     fragmentManager.findFragmentByTag(tag) as BaseFlowFragment?
             }
             Flows.CHARACTER_DETAIL.name -> {

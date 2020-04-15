@@ -5,10 +5,10 @@ import com.example.rickandmortyapp.core.ResourceProvider
 import com.example.rickandmortyapp.core.base.BasePresenter
 import com.example.rickandmortyapp.feature.character_detail.character_detail_flow.navigation.CharacterDetailNavigator
 import com.example.rickandmortyapp.feature.character_detail.character_detail_fm.mapper.ToCharacterEntityMapper
-import com.example.rickandmortyapp.feature.domain.CharactersInteractor
-import com.example.rickandmortyapp.feature.domain.entity.Rating
-import com.example.rickandmortyapp.feature.tab_container.characters.presentation.model.CharacterModel
-import com.example.rickandmortyapp.feature.tab_container.characters.presentation.model.UpdateCharacterBus
+import com.example.rickandmortyapp.domain.CharactersInteractor
+import com.example.rickandmortyapp.domain.entity.Rating
+import com.example.rickandmortyapp.feature.characters.characters_fm.presentation.model.CharacterModel
+import com.example.rickandmortyapp.feature.characters.characters_fm.presentation.model.UpdateCharacterBus
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 import timber.log.Timber

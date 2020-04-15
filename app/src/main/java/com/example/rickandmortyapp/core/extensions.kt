@@ -8,9 +8,16 @@ import androidx.annotation.LayoutRes
 import com.google.android.material.appbar.AppBarLayout
 import com.google.android.material.appbar.CollapsingToolbarLayout
 import com.jakewharton.rxbinding2.view.RxView
-import kotlinx.android.synthetic.main.character_details_fragment.*
 import timber.log.Timber
 import java.util.concurrent.TimeUnit
+import toothpick.Scope
+import toothpick.Toothpick
+import toothpick.config.Module
+
+fun Scope.module(func: Module.() -> Unit): Scope {
+    installModules(com.example.rickandmortyapp.core.di.module { func(this) })
+    return this
+}
 
 fun View.show() {
     visibility = View.VISIBLE

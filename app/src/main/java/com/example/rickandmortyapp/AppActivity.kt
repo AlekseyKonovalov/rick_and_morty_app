@@ -87,6 +87,6 @@ class AppActivity : AppCompatActivity() {
     }
 
     companion object {
-        private val finishFlows = listOf(Flows.TAB_CONTAINER.name, Flows.SPLASH.name)
+        private val finishFlows = listOf(Flows.CHARACTERS.name, Flows.SPLASH.name)
     }
 }

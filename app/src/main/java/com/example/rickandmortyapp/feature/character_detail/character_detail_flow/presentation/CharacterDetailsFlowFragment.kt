@@ -6,7 +6,7 @@ import com.arellomobile.mvp.presenter.ProvidePresenter
 import com.example.rickandmortyapp.R
 import com.example.rickandmortyapp.core.base.BaseFlowFragment
 import com.example.rickandmortyapp.feature.character_detail.character_detail_flow.navigation.CharacterDetailRouter
-import com.example.rickandmortyapp.feature.tab_container.characters.presentation.model.CharacterModel
+import com.example.rickandmortyapp.feature.characters.characters_fm.presentation.model.CharacterModel
 import com.example.rickandmortyapp.navigation.Command
 import com.example.rickandmortyapp.navigation.Flows
 import com.example.rickandmortyapp.navigation.NavigatorData

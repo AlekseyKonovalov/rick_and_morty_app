@@ -15,4 +15,10 @@
     <string name="ch_details_name">Имя</string>
     <string name="ch_details_rate_person">Оцените персонажа</string>
 
+
+    <string name="navigation_profile">Пользователь</string>
+    <string name="navigation_favorites">Избранное</string>
+    <string name="navigation_settings">Настройки</string>
+    <string name="navigation_about">О приложении</string>
+
 </resources>

@@ -8,8 +8,8 @@ import com.example.rickandmortyapp.db.AppDatabase
 import com.example.rickandmortyapp.db.DatabaseProvider
 import com.example.rickandmortyapp.feature.character_detail.character_detail_flow.navigation.CharacterDetailNavigator
 import com.example.rickandmortyapp.feature.splash.splash_flow.navigation.SplashNavigator
-import com.example.rickandmortyapp.feature.tab_container.characters.presentation.model.UpdateCharacterBus
-import com.example.rickandmortyapp.feature.tab_container.tab_container_flow.navigation.TabContainerNavigator
+import com.example.rickandmortyapp.feature.characters.characters_fm.presentation.model.UpdateCharacterBus
+import com.example.rickandmortyapp.feature.characters.characters_flow.navigation.CharactersNavigator
 import com.example.rickandmortyapp.navigation.*
 import toothpick.config.Module
 import toothpick.ktp.binding.bind
@@ -23,7 +23,7 @@ class ApplicationModule(context: Context) : Module() {
 
         bind<AppNavigator>().singleton()
         bind<SplashNavigator>().singleton()
-        bind<TabContainerNavigator>().singleton()
+        bind<CharactersNavigator>().singleton()
         bind<CharacterDetailNavigator>().singleton()
 
         bind<UpdateCharacterBus>().singleton()

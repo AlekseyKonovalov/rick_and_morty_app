@@ -1,8 +1,7 @@
 package com.example.rickandmortyapp.feature.character_detail.character_detail_fm.mapper
 
-import com.example.rickandmortyapp.feature.domain.entity.CharacterEntity
-import com.example.rickandmortyapp.feature.domain.entity.Rating
-import com.example.rickandmortyapp.feature.tab_container.characters.presentation.model.CharacterModel
+import com.example.rickandmortyapp.domain.entity.CharacterEntity
+import com.example.rickandmortyapp.feature.characters.characters_fm.presentation.model.CharacterModel
 import javax.inject.Inject
 
 class ToCharacterEntityMapper @Inject constructor() {
