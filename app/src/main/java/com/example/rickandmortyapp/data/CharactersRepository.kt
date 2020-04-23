@@ -38,6 +38,52 @@ class CharactersRepository @Inject constructor(
 
     }
 
+    fun getCharactersBySearch(request: String): Observable<List<CharacterEntity>> {
+        return Observable.zip(rickMortyApi.getCharactersBySearch(request).map { characterEntityMapper.mapToEntity(it) },
+            appDatabase.characterDao().getAll(),
+            BiFunction { remoteList: List<CharacterEntity>,
+                         localList: List<CharacterDbEntity> ->
+                return@BiFunction Pair(remoteList, localList)
+            })
+            .map {
+                val items = it.first.toMutableList()
+                it.second.forEach { dbEntity ->
+                    val item = items.find { it.id == dbEntity.id }
+                    if (item != null) {
+                        val index = items.indexOf(item)
+                        items[index] = items[index].copy(
+                            isFavorite = dbEntity.isFavorite,
+                            rating = characterEntityMapper.mapRating(dbEntity.rating)
+                        )
+                    }
+                }
+                items
+            }
+    }
+
+    fun getCharactersByFilter(status: String, species: String, gender: String): Observable<List<CharacterEntity>> {
+        return Observable.zip(rickMortyApi.getCharactersByFilter(status, species, gender).map { characterEntityMapper.mapToEntity(it) },
+            appDatabase.characterDao().getAll(),
+            BiFunction { remoteList: List<CharacterEntity>,
+                         localList: List<CharacterDbEntity> ->
+                return@BiFunction Pair(remoteList, localList)
+            })
+            .map {
+                val items = it.first.toMutableList()
+                it.second.forEach { dbEntity ->
+                    val item = items.find { it.id == dbEntity.id }
+                    if (item != null) {
+                        val index = items.indexOf(item)
+                        items[index] = items[index].copy(
+                            isFavorite = dbEntity.isFavorite,
+                            rating = characterEntityMapper.mapRating(dbEntity.rating)
+                        )
+                    }
+                }
+                items
+            }
+    }
+
     fun saveCharacter(item: CharacterEntity): Completable {
         return appDatabase.characterDao().insert(characterEntityMapper.mapFromEntityToDBEntity(item))
     }

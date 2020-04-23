@@ -5,6 +5,9 @@ import com.arellomobile.mvp.InjectViewState
 import com.example.rickandmortyapp.core.base.BasePresenter
 import com.example.rickandmortyapp.feature.character_detail.character_detail_fm.mapper.ToCharacterEntityMapper
 import com.example.rickandmortyapp.domain.CharactersInteractor
+import com.example.rickandmortyapp.feature.characters.characters_flow.navigation.CharactersNavigator
+import com.example.rickandmortyapp.feature.characters.characters_fm.presentation.filter_dialog.model.FilterDataBus
+import com.example.rickandmortyapp.feature.characters.characters_fm.presentation.filter_dialog.model.FilterModel
 import com.example.rickandmortyapp.feature.characters.characters_fm.presentation.mapper.FromCharacterEntityMapper
 import com.example.rickandmortyapp.feature.characters.characters_fm.presentation.model.UpdateCharacterBus
 import com.example.rickandmortyapp.feature.characters.characters_fm.presentation.model.CharacterModel
@@ -18,13 +21,15 @@ import javax.inject.Inject
 class CharactersPresenter @Inject constructor(
     private val charactersInteractor: CharactersInteractor,
     private val fromCharacterEntityMapper: FromCharacterEntityMapper,
-    private val appNavigator: AppNavigator,
     private val updateCharacterBus: UpdateCharacterBus,
-    private val toCharacterEntityMapper: ToCharacterEntityMapper
+    private val toCharacterEntityMapper: ToCharacterEntityMapper,
+    private val charactersNavigator: CharactersNavigator,
+    private val filterDataBus: FilterDataBus
 ) : BasePresenter<CharactersView>() {
 
     private var charactersList: MutableList<CharacterModel> = mutableListOf()
     private var currentPage = 0
+    private var filterModel: FilterModel? = null
 
     override fun onFirstViewAttach() {
         viewState.initListeners()
@@ -44,9 +49,53 @@ class CharactersPresenter @Inject constructor(
                 Timber.e(it)
             })
             .addToFullLifeCycle()
+
+        filterDataBus.getData()
+            .compose(schedulersTransformerObservable())
+            .subscribe({
+                it?.let {
+                    filterModel = it
+                    dispatchFilterData()
+                }
+            }, {
+                Timber.e(it)
+            })
+            .addToFullLifeCycle()
+    }
+
+    private fun dispatchFilterData() {
+        val filterModel = filterModel
+        if (filterModel == null ||
+            filterModel.species == null && filterModel.status == null && filterModel.gender == null
+        ) {
+            this.filterModel = null
+            viewState.setChipGroup(filterModel)
+            return
+        }
+
+        charactersInteractor.getCharactersByFilter(
+            status = filterModel.status?.title ?: "",
+            species = filterModel.species?.title ?: "",
+            gender = filterModel.gender?.title ?: ""
+        )
+            .map { fromCharacterEntityMapper.map(it) }
+            .compose(RxDecor.loading(viewState))
+            .compose(schedulersTransformerObservable())
+            .subscribe(
+                {
+                    charactersList.clear()
+                    charactersList.addAll(it)
+                    viewState.setItems(charactersList)
+                    viewState.setChipGroup(filterModel)
+                },
+                {
+                    Timber.e(it.toString())
+                }
+            ).addToFullLifeCycle()
     }
 
     fun onPageScrolled() {
+        if (filterModel != null) return
         currentPage += 1
         charactersInteractor.getAllCharacters(page = currentPage)
             .map { fromCharacterEntityMapper.map(it) }
@@ -66,11 +115,14 @@ class CharactersPresenter @Inject constructor(
     fun onRefresh() {
         currentPage = 0
         charactersList.clear()
+        filterModel = null
+        viewState.setChipGroup(filterModel)
         onPageScrolled()
     }
 
+    //todo to baseCharacterPresenter
     fun onCharacterItemClick(item: CharacterModel) {
-        appNavigator.emmitData(
+        charactersNavigator.emmitData(
             NavigatorData(
                 Command.Navigate,
                 ScreenData(
@@ -97,7 +149,41 @@ class CharactersPresenter @Inject constructor(
         viewState.openMenu()
     }
 
+    fun onFilterDialogClick() {
+        viewState.openFilterDialog()
+    }
+
+    fun onSearchClick() {
+        charactersNavigator.emmitData(
+            NavigatorData(
+                Command.Navigate,
+                ScreenData(
+                    Flows.CHARACTERS.SEARCH
+                )
+            )
+        )
+    }
+
+    fun onChipsClick(filter: String) {
+        filterModel?.let {
+            when (filter) {
+                STATUS_FILTER -> {
+                    filterDataBus.emmitData(it.copy(status = null))
+                }
+                SPECIES_FILTER -> {
+                    filterDataBus.emmitData(it.copy(species = null))
+                }
+                GENDER_FILTER -> {
+                    filterDataBus.emmitData(it.copy(gender = null))
+                }
+            }
+        }
+    }
+
     companion object {
         private const val PAGINATION_SIZE = 20
+        val SPECIES_FILTER = "SPECIES_FILTER"
+        val STATUS_FILTER = "STATUS_FILTER"
+        val GENDER_FILTER = "GENDER_FILTER"
     }
 }

@@ -9,4 +9,12 @@ interface RickMortyApi {
     @GET("character/")
     fun getAllCharacters(@Query("page") page: Int): Observable<CharacterResponse>
 
+    @GET("character/")
+    fun getCharactersBySearch(@Query("name") request: String): Observable<CharacterResponse>
+
+    @GET("character/")
+    fun getCharactersByFilter(@Query("status") status: String,
+                              @Query("species") species: String,
+                              @Query("gender") gender: String): Observable<CharacterResponse>
+
 }

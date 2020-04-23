@@ -21,4 +21,27 @@
     <string name="navigation_settings">Настройки</string>
     <string name="navigation_about">О приложении</string>
 
+    <string name="search_placeholder_text">Воспользуйтесь поиском,чтобы найти интересующих Вас персонажей</string>
+    <string name="search_search_hint_text">искать здесь . . .</string>
+
+    <string name="filter_title">Фильтр</string>
+    <string name="filter_status_title">Статус жизни</string>
+    <string name="filter_status_alive">Живой</string>
+    <string name="filter_status_dead">Мертвый</string>
+    <string name="filter_status_unknown">Неизвестно</string>
+
+    <string name="filter_species_title">Раса</string>
+    <string name="filter_species_human">Человек</string>
+    <string name="filter_species_alien">Инопланетянин</string>
+
+    <string name="filter_gender_title">Пол</string>
+    <string name="filter_gender_man">Мужчина</string>
+    <string name="filter_gender_woman">Женщина</string>
+    <string name="filter_gender_genderless">Пол отсутствует</string>
+    <string name="filter_gender_unknown">Неизвестно</string>
+
+    <string name="filter_apply">Применить</string>
+    <string name="filter_chip_title">%1$s: %2$s</string>
+
+
 </resources>

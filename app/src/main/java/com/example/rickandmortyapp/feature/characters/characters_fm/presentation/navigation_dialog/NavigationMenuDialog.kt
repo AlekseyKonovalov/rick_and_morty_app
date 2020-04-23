@@ -1,4 +1,4 @@
-package com.example.rickandmortyapp.feature.characters.characters_fm.presentation.dialog
+package com.example.rickandmortyapp.feature.characters.characters_fm.presentation.navigation_dialog
 
 import android.app.Dialog
 import android.os.Bundle
@@ -9,7 +9,7 @@ import com.arellomobile.mvp.MvpAppCompatDialogFragment
 import com.arellomobile.mvp.presenter.InjectPresenter
 import com.arellomobile.mvp.presenter.ProvidePresenter
 import com.example.rickandmortyapp.R
-import com.example.rickandmortyapp.Scopes
+import com.example.rickandmortyapp.core.base.BaseFragment
 import com.example.rickandmortyapp.core.module
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import kotlinx.android.synthetic.main.dialog_navigation_menu.*
@@ -25,7 +25,7 @@ class NavigationMenuDialog : MvpAppCompatDialogFragment(), NavigationMenuView {
 
     @ProvidePresenter
     fun providePresenter(): NavigationDialogPresenter {
-        return Toothpick.openScopes(Scopes.NET_SCOPE, scopeName).module {
+        return Toothpick.openScopes((parentFragment as BaseFragment).scopeName, scopeName).module {
         }.getInstance(NavigationDialogPresenter::class.java).also {
             Toothpick.closeScope(scopeName)
         }

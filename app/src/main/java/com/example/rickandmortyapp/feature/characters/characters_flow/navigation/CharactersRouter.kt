@@ -4,6 +4,7 @@ import androidx.fragment.app.FragmentManager
 import com.example.rickandmortyapp.core.base.BaseFlowFragment
 import com.example.rickandmortyapp.core.base.BaseFragment
 import com.example.rickandmortyapp.feature.characters.characters_fm.presentation.CharactersFragment
+import com.example.rickandmortyapp.feature.search.presentation.SearchFragment
 import com.example.rickandmortyapp.navigation.BaseRouter
 import com.example.rickandmortyapp.navigation.Command
 import com.example.rickandmortyapp.navigation.Flows
@@ -24,7 +25,12 @@ class CharactersRouter(
             Flows.CHARACTERS.CHARACTERS  -> {
                 tag =  Flows.CHARACTERS.CHARACTERS
                 fragment = if (navigatorData.command != Command.Remove) CharactersFragment.getInstance() else
-                    fragmentManager.findFragmentByTag(tag) as BaseFlowFragment?
+                    fragmentManager.findFragmentByTag(tag) as BaseFragment?
+            }
+            Flows.CHARACTERS.SEARCH  -> {
+                tag =  Flows.CHARACTERS.SEARCH
+                fragment = if (navigatorData.command != Command.Remove) SearchFragment.getInstance() else
+                    fragmentManager.findFragmentByTag(tag) as BaseFragment?
             }
             else -> return
         }

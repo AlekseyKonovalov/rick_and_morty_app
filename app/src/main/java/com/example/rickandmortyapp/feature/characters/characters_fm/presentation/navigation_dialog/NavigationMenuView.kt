@@ -1,4 +1,4 @@
-package com.example.rickandmortyapp.feature.characters.characters_fm.presentation.dialog
+package com.example.rickandmortyapp.feature.characters.characters_fm.presentation.navigation_dialog
 
 import com.arellomobile.mvp.MvpView
 import com.arellomobile.mvp.viewstate.strategy.AddToEndSingleStrategy

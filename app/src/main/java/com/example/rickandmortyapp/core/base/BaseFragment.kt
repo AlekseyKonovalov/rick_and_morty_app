@@ -21,7 +21,7 @@ abstract class BaseFragment : MvpAppCompatFragment(), Presentable {
     protected lateinit var scope: Scope
         private set
 
-    private lateinit var scopeName: String
+    lateinit var scopeName: String
     private val parentScopeName: String by lazy {
         (parentFragment as? BaseFragment)?.scopeName ?: Scopes.NET_SCOPE
     }
@@ -39,7 +39,10 @@ abstract class BaseFragment : MvpAppCompatFragment(), Presentable {
             scope = KTP.openScopes(parentScopeName, scopeName)
             installModules(scope)
         }
+        injectDependencies()
     }
+
+    protected open fun injectDependencies() {}
 
     override fun showProgress() {
         loadingView.showProgress()

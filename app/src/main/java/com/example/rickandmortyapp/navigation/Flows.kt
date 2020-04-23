@@ -16,8 +16,9 @@ object Flows {
     object CHARACTERS : Flow("CHARACTERS") {
 
         const val CHARACTERS = "CHARACTERS"
+        const val SEARCH = "SEARCH"
 
-        val screens = listOf(CHARACTERS)
+        val screens = listOf(CHARACTERS, SEARCH)
     }
 
     object  CHARACTER_DETAIL: Flow("CHARACTER_DETAIL_FLOW") {

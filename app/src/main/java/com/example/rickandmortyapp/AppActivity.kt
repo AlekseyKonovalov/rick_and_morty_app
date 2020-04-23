@@ -7,6 +7,7 @@ import com.example.rickandmortyapp.core.di.NetModule
 import com.example.rickandmortyapp.navigation.*
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
+import io.reactivex.rxkotlin.plusAssign
 import io.reactivex.schedulers.Schedulers
 import toothpick.ktp.KTP
 import java.util.*
@@ -33,19 +34,18 @@ class AppActivity : AppCompatActivity() {
 
         router.chooseNavigation(NavigatorData(Command.Navigate, ScreenData(Flows.SPLASH.name)))
 
-        disposables.add(
-            appNavigator.getData()
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe {
-                    router.chooseNavigation(
-                        NavigatorData(
-                            it.command,
-                            ScreenData(it.screenData.screenName, it.screenData.data)
-                        )
+        disposables += appNavigator.getData()
+            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribe {
+                router.chooseNavigation(
+                    NavigatorData(
+                        it.command,
+                        ScreenData(it.screenData.screenName, it.screenData.data)
                     )
-                }
-        )
+                )
+            }
+
     }
 
     override fun onDestroy() {

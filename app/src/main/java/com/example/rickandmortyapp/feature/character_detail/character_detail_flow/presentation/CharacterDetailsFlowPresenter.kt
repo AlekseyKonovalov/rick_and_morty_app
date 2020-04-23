@@ -18,14 +18,17 @@ class CharacterDetailsFlowPresenter @Inject constructor(
 
     override fun onFirstViewAttach() {
         viewState.initRouter(fragments)
-        viewState.chooseNavigationAction(NavigatorData(Command.Navigate,
-            ScreenData(Flows.CHARACTER_DETAIL.SCREEN_CHARACTER_DETAIL)
-        ))
+        viewState.chooseNavigationAction(
+            NavigatorData(
+                Command.Navigate,
+                ScreenData(Flows.CHARACTER_DETAIL.SCREEN_CHARACTER_DETAIL)
+            )
+        )
 
         characterDetailNavigator.getData()
             .compose(schedulersTransformerObservable())
-            .subscribe( {
-                if (Flows.CHARACTER_DETAIL.screens.contains(it.screenData.screenName)){
+            .subscribe({
+                if (Flows.CHARACTER_DETAIL.screens.contains(it.screenData.screenName)) {
                     viewState.chooseNavigationAction(it)
                 } else {
                     appNavigator.emmitData(it)
@@ -36,7 +39,7 @@ class CharacterDetailsFlowPresenter @Inject constructor(
             .addToFullLifeCycle()
     }
 
-    fun onBackPressed(){
+    fun onBackPressed() {
         appNavigator.emmitData(NavigatorData(Command.Remove, ScreenData(Flows.CHARACTER_DETAIL.name)))
     }
 

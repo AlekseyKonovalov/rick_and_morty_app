@@ -15,7 +15,7 @@
         android:paddingTop="16dp"
         android:paddingBottom="16dp"
         android:tint="@color/colorUpperGray"
-        app:srcCompat="@drawable/ic_remove" />
+        app:srcCompat="@drawable/ic_dialog_header_divider" />
 
     <LinearLayout
         android:id="@+id/layout_profile"
@@ -24,11 +24,11 @@
         android:orientation="horizontal">
 
         <androidx.appcompat.widget.AppCompatImageView
-            android:layout_width="36dp"
-            android:layout_height="36dp"
+            android:layout_width="32dp"
+            android:layout_height="32dp"
             android:layout_gravity="center"
             android:layout_marginStart="36dp"
-            android:tint="@android:color/black"
+            android:tint="@color/colorPrimary"
             app:srcCompat="@drawable/ic_person" />
 
         <TextView
@@ -38,7 +38,7 @@
             android:layout_marginStart="36dp"
             android:layout_weight="1"
             android:text="@string/navigation_profile"
-            android:textSize="24sp" />
+            android:textSize="20sp" />
 
     </LinearLayout>
 
@@ -48,11 +48,11 @@
         android:orientation="horizontal">
 
         <androidx.appcompat.widget.AppCompatImageView
-            android:layout_width="36dp"
-            android:layout_height="36dp"
+            android:layout_width="32dp"
+            android:layout_height="32dp"
             android:layout_gravity="center"
             android:layout_marginStart="36dp"
-            android:tint="@android:color/black"
+            android:tint="@color/colorPrimary"
             app:srcCompat="@drawable/ic_favorite" />
 
         <TextView
@@ -62,7 +62,7 @@
             android:layout_marginStart="36dp"
             android:layout_weight="1"
             android:text="@string/navigation_favorites"
-            android:textSize="24sp" />
+            android:textSize="20sp" />
 
     </LinearLayout>
 
@@ -72,11 +72,11 @@
         android:orientation="horizontal">
 
         <androidx.appcompat.widget.AppCompatImageView
-            android:layout_width="36dp"
-            android:layout_height="36dp"
+            android:layout_width="32dp"
+            android:layout_height="32dp"
             android:layout_gravity="center"
             android:layout_marginStart="36dp"
-            android:tint="@android:color/black"
+            android:tint="@color/colorPrimary"
             app:srcCompat="@drawable/ic_settings" />
 
         <TextView
@@ -86,7 +86,7 @@
             android:layout_marginStart="36dp"
             android:layout_weight="1"
             android:text="@string/navigation_settings"
-            android:textSize="24sp" />
+            android:textSize="20sp" />
 
     </LinearLayout>
 
@@ -96,11 +96,11 @@
         android:orientation="horizontal">
 
         <androidx.appcompat.widget.AppCompatImageView
-            android:layout_width="36dp"
-            android:layout_height="36dp"
+            android:layout_width="32dp"
+            android:layout_height="32dp"
             android:layout_gravity="center"
             android:layout_marginStart="36dp"
-            android:tint="@android:color/black"
+            android:tint="@color/colorPrimary"
             app:srcCompat="@drawable/ic_new_releases" />
 
         <TextView
@@ -110,7 +110,7 @@
             android:layout_marginStart="36dp"
             android:layout_weight="1"
             android:text="@string/navigation_about"
-            android:textSize="24sp" />
+            android:textSize="20sp" />
 
     </LinearLayout>
 

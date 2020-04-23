@@ -1,8 +1,7 @@
-package com.example.rickandmortyapp.feature.characters.characters_fm.presentation.dialog
+package com.example.rickandmortyapp.feature.characters.characters_fm.presentation.navigation_dialog
 
 import com.arellomobile.mvp.InjectViewState
 import com.example.rickandmortyapp.core.base.BasePresenter
-import com.example.rickandmortyapp.feature.characters.characters_flow.navigation.CharactersRouter
 import javax.inject.Inject
 
 @InjectViewState
