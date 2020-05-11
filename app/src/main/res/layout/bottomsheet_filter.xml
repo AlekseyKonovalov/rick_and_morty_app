@@ -26,36 +26,13 @@
         android:text="@string/filter_status_title"
         android:textSize="20sp" />
 
-    <com.google.android.material.chip.ChipGroup
+    <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/chip_group_status"
-        android:layout_marginStart="@dimen/margin_medium"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="@dimen/margin_medium"
-        app:singleSelection="true">
+        android:layout_marginStart="@dimen/margin_medium"
+        android:layout_marginBottom="@dimen/margin_medium" />
 
-        <com.google.android.material.chip.Chip
-            android:id="@+id/filter_status_alive"
-            style="@style/Widget.MaterialComponents.Chip.Filter"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/filter_status_alive" />
-
-        <com.google.android.material.chip.Chip
-            android:id="@+id/filter_status_dead"
-            style="@style/Widget.MaterialComponents.Chip.Filter"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/filter_status_dead" />
-
-        <com.google.android.material.chip.Chip
-            android:id="@+id/filter_status_unknown"
-            style="@style/Widget.MaterialComponents.Chip.Filter"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/filter_status_unknown" />
-
-    </com.google.android.material.chip.ChipGroup>
 
     <TextView
         android:layout_width="wrap_content"
@@ -66,29 +43,13 @@
         android:text="@string/filter_species_title"
         android:textSize="20sp" />
 
-    <com.google.android.material.chip.ChipGroup
+    <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/chip_group_species"
-        android:layout_marginStart="@dimen/margin_medium"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="@dimen/margin_medium"
-        app:singleSelection="true">
+        android:layout_marginStart="@dimen/margin_medium"
+        android:layout_marginBottom="@dimen/margin_medium" />
 
-        <com.google.android.material.chip.Chip
-            android:id="@+id/filter_species_human"
-            style="@style/Widget.MaterialComponents.Chip.Filter"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/filter_species_human" />
-
-        <com.google.android.material.chip.Chip
-            android:id="@+id/filter_species_alien"
-            style="@style/Widget.MaterialComponents.Chip.Filter"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/filter_species_alien" />
-
-    </com.google.android.material.chip.ChipGroup>
 
     <TextView
         android:layout_width="wrap_content"
@@ -99,43 +60,12 @@
         android:text="@string/filter_gender_title"
         android:textSize="20sp" />
 
-    <com.google.android.material.chip.ChipGroup
+    <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/chip_group_gender"
-        android:layout_marginStart="@dimen/margin_medium"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="@dimen/margin_medium"
-        app:singleSelection="true">
-
-        <com.google.android.material.chip.Chip
-            android:id="@+id/filter_gender_man"
-            style="@style/Widget.MaterialComponents.Chip.Filter"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/filter_gender_man" />
-
-        <com.google.android.material.chip.Chip
-            android:id="@+id/filter_gender_woman"
-            style="@style/Widget.MaterialComponents.Chip.Filter"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/filter_gender_woman" />
-
-        <com.google.android.material.chip.Chip
-            android:id="@+id/filter_gender_genderless"
-            style="@style/Widget.MaterialComponents.Chip.Filter"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/filter_gender_genderless" />
-
-        <com.google.android.material.chip.Chip
-            android:id="@+id/filter_gender_unknown"
-            style="@style/Widget.MaterialComponents.Chip.Filter"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/filter_gender_unknown" />
-
-    </com.google.android.material.chip.ChipGroup>
+        android:layout_marginStart="@dimen/margin_medium"
+        android:layout_marginBottom="@dimen/margin_medium"/>
 
 
     <com.google.android.material.button.MaterialButton

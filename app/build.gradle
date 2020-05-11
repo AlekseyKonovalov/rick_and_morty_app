@@ -86,4 +86,6 @@ dependencies {
 
     implementation "androidx.swiperefreshlayout:swiperefreshlayout:1.0.0"
 
+    implementation 'com.beloo.widget:ChipsLayoutManager:0.3.7@aar'
+
 }
