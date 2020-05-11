@@ -9,6 +9,7 @@ import com.example.rickandmortyapp.feature.character_detail.character_detail_fm.
 import com.example.rickandmortyapp.feature.characters.characters_flow.navigation.CharactersNavigator
 import com.example.rickandmortyapp.feature.characters.characters_fm.presentation.mapper.FromCharacterEntityMapper
 import com.example.rickandmortyapp.feature.characters.characters_fm.presentation.model.CharacterModel
+import com.example.rickandmortyapp.feature.characters.characters_fm.presentation.model.LoadingModel
 import com.example.rickandmortyapp.navigation.*
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
@@ -25,6 +26,7 @@ class SearchPresenter @Inject constructor(
 ) : BasePresenter<SearchView>() {
 
     private var charactersList: MutableList<CharacterModel> = mutableListOf()
+    private var searchedList: MutableList<Any> = mutableListOf()
 
     override fun onFirstViewAttach() {
         viewState.initViews()
@@ -35,6 +37,9 @@ class SearchPresenter @Inject constructor(
             updateItems(emptyList())
             return
         }
+
+        updatedBottomItem(LoadingModel.getLoading())
+
         charactersInteractor.getCharactersBySearch(request)
             .map { fromCharacterEntityMapper.map(it) }
             .compose(RxDecor.loading(viewState))
@@ -42,20 +47,27 @@ class SearchPresenter @Inject constructor(
             .subscribe(
                 {
                     updateItems(it.list)
-                    viewState.setItems(charactersList)
                 },
                 {
-                    updateItems(emptyList())
-                    viewState.showError(resourceProvider.getString(R.string.search_empty_error))
+                    charactersList.clear()
+                    updatedBottomItem(LoadingModel.getError(resourceProvider.getString(R.string.search_empty_error)))
+                    changePlaceholder(true)
                     Timber.e(it.toString())
                 }
             ).addToFullLifeCycle()
+    }
+
+    private fun updatedBottomItem(data: LoadingModel){
+        searchedList.clear()
+        searchedList.add(data)
+        viewState.setItems(searchedList)
     }
 
     private fun updateItems(items: List<CharacterModel>){
         changePlaceholder(items.isNotEmpty())
         charactersList.clear()
         charactersList.addAll(items)
+        viewState.setItems(charactersList)
     }
 
     private fun changePlaceholder(isHidePlaceholder: Boolean) {
@@ -66,7 +78,6 @@ class SearchPresenter @Inject constructor(
         }
     }
 
-    //todo to baseCharacterPresenter
     fun onCharacterItemClick(item: CharacterModel) {
         charactersNavigator.emmitData(
             NavigatorData(
@@ -83,12 +94,16 @@ class SearchPresenter @Inject constructor(
         val indexItem = charactersList.indexOf(item)
         if (indexItem == -1) return
         charactersList[indexItem] = item.copy(isFavorite = !item.isFavorite)
-        charactersInteractor.saveCharacter(toCharacterEntityMapper.mapToEntity(charactersList[indexItem]))
+        saveFavoriteItem(charactersList[indexItem])
+        viewState.setItems(charactersList)
+    }
+
+    private fun saveFavoriteItem(item: CharacterModel) {
+        charactersInteractor.saveCharacter(toCharacterEntityMapper.mapToEntity(item))
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe({}, { Timber.e(it) })
             .addToFullLifeCycle()
-        viewState.setItems(charactersList)
     }
 
     fun onBackPressed(){

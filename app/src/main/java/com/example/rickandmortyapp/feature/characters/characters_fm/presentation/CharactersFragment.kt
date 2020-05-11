@@ -83,7 +83,7 @@ class CharactersFragment : BaseFragment(), CharactersView {
         characters_list.adapter = charactersAdapter
     }
 
-    override fun setItems(items: List<CharacterModel>) {
+    override fun setItems(items: List<Any>) {
         swipeRefreshLayout.isRefreshing = false
         charactersAdapter.updateDataSet(items)
     }

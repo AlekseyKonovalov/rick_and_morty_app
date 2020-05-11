@@ -13,6 +13,7 @@ import com.example.rickandmortyapp.feature.characters.characters_fm.presentation
 import com.example.rickandmortyapp.feature.characters.characters_fm.presentation.mapper.FromCharacterEntityMapper
 import com.example.rickandmortyapp.feature.characters.characters_fm.presentation.model.UpdateCharacterBus
 import com.example.rickandmortyapp.feature.characters.characters_fm.presentation.model.CharacterModel
+import com.example.rickandmortyapp.feature.characters.characters_fm.presentation.model.LoadingModel
 import com.example.rickandmortyapp.navigation.*
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
@@ -32,6 +33,8 @@ class CharactersPresenter @Inject constructor(
 ) : BasePresenter<CharactersView>() {
 
     private var charactersList: MutableList<CharacterModel> = mutableListOf()
+    private var searchedList: MutableList<Any> = mutableListOf()
+
     private var currentPage = 0
     private var count: Int? = null
     private var filterModel: FilterModel? = null
@@ -92,13 +95,15 @@ class CharactersPresenter @Inject constructor(
         val species = filterModel?.species?.title ?: ""
         val gender = filterModel?.gender?.title ?: ""
 
+        updatedBottomItem(LoadingModel.getLoading())
+
         charactersInteractor.getCharactersByFilter(
             status = status,
             species = species,
             gender = gender,
             page = currentPage
-        ).map { fromCharacterEntityMapper.map(it) }
-            .compose(RxDecor.loading(viewState))
+        )
+            .map { fromCharacterEntityMapper.map(it) }
             .compose(schedulersTransformerObservable())
             .subscribe(
                 {
@@ -109,11 +114,16 @@ class CharactersPresenter @Inject constructor(
                 },
                 {
                     charactersList.clear()
-                    viewState.setItems(charactersList)
-                    viewState.showError(resourceProvider.getString(R.string.search_empty_error))
+                    updatedBottomItem(LoadingModel.getError(resourceProvider.getString(R.string.search_empty_error)))
                     Timber.e(it.toString())
                 }
             ).addToFullLifeCycle()
+    }
+
+    private fun updatedBottomItem(data: LoadingModel){
+        searchedList.clear()
+        searchedList.add(data)
+        viewState.setItems(searchedList)
     }
 
     private fun updateFilterChipGroup() {

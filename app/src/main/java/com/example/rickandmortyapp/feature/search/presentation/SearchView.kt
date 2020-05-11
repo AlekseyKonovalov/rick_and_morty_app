@@ -12,7 +12,7 @@ private const val PLACEHOLDER_TAG = "PLACEHOLDER_TAG"
 interface SearchView : Presentable {
 
     fun initViews()
-    fun setItems(items: List<CharacterModel>)
+    fun setItems(items: List<Any>)
 
     @StateStrategyType(value = AddToEndSingleStrategy::class, tag = PLACEHOLDER_TAG)
     fun showPlaceholder()
@@ -20,6 +20,6 @@ interface SearchView : Presentable {
     fun hidePlaceholder()
     @StateStrategyType(OneExecutionStateStrategy::class)
     fun showError(error: String)
-
+    @StateStrategyType(OneExecutionStateStrategy::class)
     fun closeView()
 }

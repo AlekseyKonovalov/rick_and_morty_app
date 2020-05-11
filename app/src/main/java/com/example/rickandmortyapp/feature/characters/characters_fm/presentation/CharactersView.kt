@@ -10,7 +10,7 @@ import com.example.rickandmortyapp.feature.characters.characters_fm.presentation
 interface CharactersView : Presentable {
     fun initListeners()
     fun initAdapter()
-    fun setItems(items: List<CharacterModel>)
+    fun setItems(items: List<Any>)
     fun updateCharacterSubscription(paginationSize: Int)
     @StateStrategyType(OneExecutionStateStrategy::class)
     fun openFilterDialog()

@@ -60,7 +60,7 @@ class SearchFragment : BaseFragment(), SearchView {
         }
     }
 
-    override fun setItems(items: List<CharacterModel>) {
+    override fun setItems(items: List<Any>) {
         charactersAdapter.updateDataSet(items)
     }
 

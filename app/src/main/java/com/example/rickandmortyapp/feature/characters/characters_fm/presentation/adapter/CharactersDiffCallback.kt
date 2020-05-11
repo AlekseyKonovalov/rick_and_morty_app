@@ -4,16 +4,18 @@ import com.example.rickandmortyapp.core.recycler.ItemDiffCallback
 import com.example.rickandmortyapp.feature.characters.characters_fm.presentation.model.CharacterModel
 
 class CharactersDiffCallback(
-    oldItems: List<CharacterModel>,
-    newItems: List<CharacterModel>
-) : ItemDiffCallback<CharacterModel>(oldItems, newItems) {
+    oldItems: List<Any>,
+    newItems: List<Any>
+) : ItemDiffCallback<Any>(oldItems, newItems) {
 
-    override fun areItemsTheSame(oldItem: CharacterModel, newItem: CharacterModel): Boolean {
-        return oldItem.id == newItem.id
+    override fun areItemsTheSame(oldItem: Any, newItem: Any): Boolean {
+        return oldItem == newItem
     }
 
-    override fun areContentsTheSame(oldItem: CharacterModel, newItem: CharacterModel): Boolean {
-        return oldItem.isFavorite == newItem.isFavorite && oldItem.rating == newItem.rating
+    override fun areContentsTheSame(oldItem: Any, newItem: Any): Boolean {
+        return if(oldItem is CharacterModel && newItem is CharacterModel){
+            oldItem.id == newItem.id && oldItem.isFavorite == newItem.isFavorite && oldItem.rating == newItem.rating
+        } else false
     }
 
 }
