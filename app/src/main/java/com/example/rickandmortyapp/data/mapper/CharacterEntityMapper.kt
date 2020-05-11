@@ -30,7 +30,11 @@ class CharacterEntityMapper @Inject constructor() {
                 )
             )
         }
-        return ListCharacterEntity (count = characterResponse.info.count, list =  charactersList)
+        return ListCharacterEntity(
+            count = characterResponse.info.count,
+            nextPage = characterResponse.info.next,
+            list = charactersList
+        )
     }
 
     fun mapFromEntityToDBEntity(characterEntity: CharacterEntity): CharacterDbEntity {

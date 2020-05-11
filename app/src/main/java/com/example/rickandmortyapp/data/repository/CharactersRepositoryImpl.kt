@@ -16,7 +16,7 @@ class CharactersRepositoryImpl @Inject constructor(
     private val rickMortyApi: RickMortyApi,
     private val characterEntityMapper: CharacterEntityMapper,
     private val appDatabase: AppDatabase
-): CharactersRepository {
+) : CharactersRepository {
 
     override fun getAllCharacters(page: Int): Observable<ListCharacterEntity> {
         return Observable.zip(rickMortyApi.getAllCharacters(page).map { characterEntityMapper.mapToEntity(it) },
@@ -31,7 +31,7 @@ class CharactersRepositoryImpl @Inject constructor(
 
     }
 
-    override  fun getCharactersBySearch(request: String): Observable<ListCharacterEntity> {
+    override fun getCharactersBySearch(request: String): Observable<ListCharacterEntity> {
         return Observable.zip(rickMortyApi.getCharactersBySearch(request).map { characterEntityMapper.mapToEntity(it) },
             appDatabase.characterDao().getAll(),
             BiFunction { remoteList: ListCharacterEntity,
@@ -43,7 +43,7 @@ class CharactersRepositoryImpl @Inject constructor(
             }
     }
 
-    override   fun getCharactersByFilter(
+    override fun getCharactersByFilter(
         status: String,
         species: String,
         gender: String,
@@ -84,7 +84,7 @@ class CharactersRepositoryImpl @Inject constructor(
                 )
             }
         }
-        return ListCharacterEntity(remote.count, items)
+        return ListCharacterEntity(remote.count, remote.nextPage, items)
     }
 
 }

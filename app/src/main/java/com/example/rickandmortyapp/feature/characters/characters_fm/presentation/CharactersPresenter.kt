@@ -36,7 +36,7 @@ class CharactersPresenter @Inject constructor(
     private var searchedList: MutableList<Any> = mutableListOf()
 
     private var currentPage = 0
-    private var count: Int? = null
+    private var nextPage: String? = null
     private var filterModel: FilterModel? = null
 
     override fun onFirstViewAttach() {
@@ -89,13 +89,13 @@ class CharactersPresenter @Inject constructor(
     fun onPageScrolled() {
         currentPage += 1
 
-        if (count != null && charactersList.size >= count!!) return
+        if (nextPage == null && currentPage != 1) return
 
         val status = filterModel?.status?.title ?: ""
         val species = filterModel?.species?.title ?: ""
         val gender = filterModel?.gender?.title ?: ""
 
-        updatedBottomItem(LoadingModel.getLoading())
+        updatedBottomItem(LoadingModel.getLoading(), charactersList)
 
         charactersInteractor.getCharactersByFilter(
             status = status,
@@ -107,7 +107,7 @@ class CharactersPresenter @Inject constructor(
             .compose(schedulersTransformerObservable())
             .subscribe(
                 {
-                    count = it.count
+                    nextPage = it.nextPage
                     charactersList.addAll(it.list)
                     viewState.setItems(charactersList)
                     updateFilterChipGroup()
@@ -120,8 +120,9 @@ class CharactersPresenter @Inject constructor(
             ).addToFullLifeCycle()
     }
 
-    private fun updatedBottomItem(data: LoadingModel){
+    private fun updatedBottomItem(data: LoadingModel, items: List<CharacterModel> = listOf()) {
         searchedList.clear()
+        searchedList.addAll(items)
         searchedList.add(data)
         viewState.setItems(searchedList)
     }

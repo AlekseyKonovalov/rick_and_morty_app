@@ -48,7 +48,7 @@ class FromCharacterEntityMapper @Inject constructor() {
                 )
             )
         }
-        return ListCharacterEntityModel(characterEntityList.count, list)
+        return ListCharacterEntityModel(characterEntityList.count, characterEntityList.nextPage, list)
     }
 
 }

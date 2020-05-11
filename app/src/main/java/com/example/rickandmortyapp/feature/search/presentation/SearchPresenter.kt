@@ -42,7 +42,6 @@ class SearchPresenter @Inject constructor(
 
         charactersInteractor.getCharactersBySearch(request)
             .map { fromCharacterEntityMapper.map(it) }
-            .compose(RxDecor.loading(viewState))
             .compose(schedulersTransformerObservable())
             .subscribe(
                 {

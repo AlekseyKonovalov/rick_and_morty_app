@@ -44,7 +44,11 @@ class FilterDialogPresenter @Inject constructor(
     fun onChipSelected(chipModel: ChipModel) {
         when (chipModel.data) {
             is FilterData.FilterStatus -> {
-                this.status = chipModel.data
+                this.status = if (chipModel.isChecked) {
+                    chipModel.data
+                } else {
+                    null
+                }
                 viewState.updateStatuses(
                     filterUiMapper.getFilterDataStatus().map {
                         ChipModel(
@@ -55,7 +59,11 @@ class FilterDialogPresenter @Inject constructor(
                 )
             }
             is FilterData.FilterSpecies -> {
-                this.species = chipModel.data
+                this.species = if (chipModel.isChecked) {
+                    chipModel.data
+                } else {
+                    null
+                }
                 viewState.updateSpecies(
                     filterUiMapper.getFilterDataSpecies().map {
                         ChipModel(
@@ -66,7 +74,11 @@ class FilterDialogPresenter @Inject constructor(
                 )
             }
             is FilterData.FilterGender -> {
-                this.gender = chipModel.data
+                this.gender = if (chipModel.isChecked) {
+                    chipModel.data
+                } else {
+                    null
+                }
                 viewState.updatedGenderList(
                     filterUiMapper.getFilterDataGender().map {
                         ChipModel(
