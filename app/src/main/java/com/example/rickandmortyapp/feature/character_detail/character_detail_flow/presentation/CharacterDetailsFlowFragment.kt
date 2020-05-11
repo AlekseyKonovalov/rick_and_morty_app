@@ -30,26 +30,17 @@ class CharacterDetailsFlowFragment : BaseFlowFragment(), CharacterDetailsFlowVie
     }
 
     override fun chooseNavigationAction(navigatorData: NavigatorData) {
-        // todo refactor
+        var updatedNavigatorData = navigatorData
         if (navigatorData.screenData.screenName == Flows.CHARACTER_DETAIL.SCREEN_CHARACTER_DETAIL
             || navigatorData.command == Command.Navigate
         ) {
             val arg = arguments!!.getSerializable(key) as CharacterModel
-            router.chooseNavigation(
-                navigatorData.copy(
-                    screenData = ScreenData(
-                        navigatorData.screenData.screenName,
-                        arg
-                    )
-                )
-            )
-        } else if (navigatorData.screenData.screenName == presenter.fragments.last() && navigatorData.command == Command.Remove) {
-            router.chooseNavigation(navigatorData)
-            presenter.onBackPressed()
-
-        } else {
-            router.chooseNavigation(navigatorData)
+            updatedNavigatorData = navigatorData.copy(   screenData = ScreenData(
+                navigatorData.screenData.screenName,
+                arg
+            ))
         }
+        router.chooseNavigation(updatedNavigatorData)
 
     }
 

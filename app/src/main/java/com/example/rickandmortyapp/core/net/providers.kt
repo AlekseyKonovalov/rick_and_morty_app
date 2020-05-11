@@ -1,7 +1,7 @@
 package com.example.rickandmortyapp.core.net
 
-import com.example.rickandmortyapp.core.BaseUrl
-import com.example.rickandmortyapp.core.NetScheduler
+import com.example.rickandmortyapp.core.di.BaseUrl
+import com.example.rickandmortyapp.core.di.NetScheduler
 import io.reactivex.Scheduler
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor

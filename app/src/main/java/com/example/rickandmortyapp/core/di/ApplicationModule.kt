@@ -2,10 +2,9 @@ package com.example.rickandmortyapp.core.di
 
 import android.content.Context
 import com.example.rickandmortyapp.BuildConfig
-import com.example.rickandmortyapp.core.BaseUrl
-import com.example.rickandmortyapp.core.ResourceProvider
-import com.example.rickandmortyapp.db.AppDatabase
-import com.example.rickandmortyapp.db.DatabaseProvider
+import com.example.rickandmortyapp.core.util.ResourceProvider
+import com.example.rickandmortyapp.data.db.AppDatabase
+import com.example.rickandmortyapp.data.db.DatabaseProvider
 import com.example.rickandmortyapp.feature.character_detail.character_detail_flow.navigation.CharacterDetailNavigator
 import com.example.rickandmortyapp.feature.splash.splash_flow.navigation.SplashNavigator
 import com.example.rickandmortyapp.feature.characters.characters_fm.presentation.model.UpdateCharacterBus

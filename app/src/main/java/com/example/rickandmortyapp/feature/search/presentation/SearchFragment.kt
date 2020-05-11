@@ -6,18 +6,16 @@ import com.arellomobile.mvp.presenter.InjectPresenter
 import com.arellomobile.mvp.presenter.ProvidePresenter
 import com.example.rickandmortyapp.R
 import com.example.rickandmortyapp.core.base.BaseFragment
-import com.example.rickandmortyapp.core.gone
-import com.example.rickandmortyapp.core.show
-import com.example.rickandmortyapp.feature.characters.characters_fm.presentation.CharactersFragment
+import com.example.rickandmortyapp.core.util.gone
+import com.example.rickandmortyapp.core.util.hideKeyboard
+import com.example.rickandmortyapp.core.util.show
 import com.example.rickandmortyapp.feature.characters.characters_fm.presentation.adapter.CharactersAdapter
 import com.example.rickandmortyapp.feature.characters.characters_fm.presentation.model.CharacterModel
-import com.example.rickandmortyapp.feature.splash.splash_flow.presentation.SplashFlowFragment
+import com.google.android.material.snackbar.Snackbar
 import com.jakewharton.rxbinding2.widget.RxTextView
-import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.rxkotlin.plusAssign
-import kotlinx.android.synthetic.main.characters_fragment.*
 import kotlinx.android.synthetic.main.search_fragment.*
 import timber.log.Timber
 import java.util.concurrent.TimeUnit
@@ -30,7 +28,12 @@ class SearchFragment : BaseFragment(), SearchView {
 
     private val disposables = CompositeDisposable()
 
-    private val charactersAdapter by lazy { CharactersAdapter(presenter::onCharacterItemClick, presenter::onFavoriteCharacterItemClick) }
+    private val charactersAdapter by lazy {
+        CharactersAdapter(
+            presenter::onCharacterItemClick,
+            presenter::onFavoriteCharacterItemClick
+        )
+    }
 
     @ProvidePresenter
     fun providePresenter() = scope.getInstance(SearchPresenter::class.java)
@@ -52,7 +55,9 @@ class SearchFragment : BaseFragment(), SearchView {
         list_search_clear_btn.setOnClickListener {
             search_key_edt.setText("")
         }
-
+        navIcon.setOnClickListener {
+            presenter.onBackPressed()
+        }
     }
 
     override fun setItems(items: List<CharacterModel>) {
@@ -70,6 +75,17 @@ class SearchFragment : BaseFragment(), SearchView {
     override fun onDestroy() {
         super.onDestroy()
         disposables.dispose()
+    }
+
+    override fun showError(error: String) {
+        Snackbar.make(container, error, Snackbar.LENGTH_LONG).show()
+    }
+
+    override fun closeView() {
+        with(requireActivity()) {
+            hideKeyboard()
+            onBackPressed()
+        }
     }
 
     companion object {

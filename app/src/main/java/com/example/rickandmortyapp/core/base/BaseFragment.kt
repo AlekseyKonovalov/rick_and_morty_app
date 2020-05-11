@@ -5,13 +5,14 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.arellomobile.mvp.MvpAppCompatFragment
-import com.example.rickandmortyapp.Presentable
-import com.example.rickandmortyapp.Scopes
-import com.example.rickandmortyapp.core.LoadingDialog
+import com.example.rickandmortyapp.core.view.Presentable
+import com.example.rickandmortyapp.core.di.Scopes
+import com.example.rickandmortyapp.core.view.LoadingDialog
 import toothpick.Scope
 import toothpick.ktp.KTP
 
-abstract class BaseFragment : MvpAppCompatFragment(), Presentable {
+abstract class BaseFragment : MvpAppCompatFragment(),
+    Presentable {
 
     abstract val layoutRes: Int
 

@@ -1,19 +1,18 @@
 package com.example.rickandmortyapp.feature.search.presentation
 
 import com.arellomobile.mvp.InjectViewState
+import com.example.rickandmortyapp.R
 import com.example.rickandmortyapp.core.base.BasePresenter
-import com.example.rickandmortyapp.domain.CharactersInteractor
+import com.example.rickandmortyapp.core.util.ResourceProvider
+import com.example.rickandmortyapp.domain.interactor.CharactersInteractor
 import com.example.rickandmortyapp.feature.character_detail.character_detail_fm.mapper.ToCharacterEntityMapper
 import com.example.rickandmortyapp.feature.characters.characters_flow.navigation.CharactersNavigator
 import com.example.rickandmortyapp.feature.characters.characters_fm.presentation.mapper.FromCharacterEntityMapper
 import com.example.rickandmortyapp.feature.characters.characters_fm.presentation.model.CharacterModel
-import com.example.rickandmortyapp.feature.splash.splash_flow.navigation.SplashNavigator
 import com.example.rickandmortyapp.navigation.*
-import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 import timber.log.Timber
-import java.util.concurrent.TimeUnit
 import javax.inject.Inject
 
 @InjectViewState
@@ -21,7 +20,8 @@ class SearchPresenter @Inject constructor(
     private val charactersInteractor: CharactersInteractor,
     private val fromCharacterEntityMapper: FromCharacterEntityMapper,
     private val toCharacterEntityMapper: ToCharacterEntityMapper,
-    private val charactersNavigator: CharactersNavigator
+    private val charactersNavigator: CharactersNavigator,
+    private val resourceProvider: ResourceProvider
 ) : BasePresenter<SearchView>() {
 
     private var charactersList: MutableList<CharacterModel> = mutableListOf()
@@ -32,9 +32,7 @@ class SearchPresenter @Inject constructor(
 
     fun dispatchSearchRequest(request: String) {
         if (request.isBlank()) {
-            charactersList.clear()
-            viewState.setItems(charactersList)
-            changePlaceholder(isHidePlaceholder = false)
+            updateItems(emptyList())
             return
         }
         charactersInteractor.getCharactersBySearch(request)
@@ -43,15 +41,21 @@ class SearchPresenter @Inject constructor(
             .compose(schedulersTransformerObservable())
             .subscribe(
                 {
-                    changePlaceholder(it.isNotEmpty())
-                    charactersList.clear()
-                    charactersList.addAll(it)
+                    updateItems(it.list)
                     viewState.setItems(charactersList)
                 },
                 {
+                    updateItems(emptyList())
+                    viewState.showError(resourceProvider.getString(R.string.search_empty_error))
                     Timber.e(it.toString())
                 }
             ).addToFullLifeCycle()
+    }
+
+    private fun updateItems(items: List<CharacterModel>){
+        changePlaceholder(items.isNotEmpty())
+        charactersList.clear()
+        charactersList.addAll(items)
     }
 
     private fun changePlaceholder(isHidePlaceholder: Boolean) {
@@ -85,5 +89,9 @@ class SearchPresenter @Inject constructor(
             .subscribe({}, { Timber.e(it) })
             .addToFullLifeCycle()
         viewState.setItems(charactersList)
+    }
+
+    fun onBackPressed(){
+        viewState.closeView()
     }
 }

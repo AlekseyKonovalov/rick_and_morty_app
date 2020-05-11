@@ -2,6 +2,7 @@ package com.example.rickandmortyapp
 
 import android.app.Application
 import com.example.rickandmortyapp.core.di.ApplicationModule
+import com.example.rickandmortyapp.core.di.Scopes
 import timber.log.Timber
 import toothpick.Toothpick
 import toothpick.configuration.Configuration

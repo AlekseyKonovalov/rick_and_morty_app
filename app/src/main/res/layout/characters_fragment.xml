@@ -2,52 +2,86 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/container"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fitsSystemWindows="true">
 
-    <com.google.android.material.chip.ChipGroup
-        android:id="@+id/chip_group_filter"
+    <com.google.android.material.appbar.AppBarLayout
+        android:id="@+id/general_appbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:fitsSystemWindows="true"
+        app:elevation="0dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:background="@color/colorPrimary">
+
+        <com.google.android.material.appbar.CollapsingToolbarLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:titleEnabled="false"
+            tools:background="@color/colorPrimary">
+
+        </com.google.android.material.appbar.CollapsingToolbarLayout>
+
+    </com.google.android.material.appbar.AppBarLayout>
+
+    <HorizontalScrollView
+        android:id="@+id/chip_group_filter_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@color/colorBackground"
-        android:paddingStart="@dimen/margin_medium"
-        android:visibility="gone"
+        android:scrollbars="none"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        tools:visibility="visible">
+        app:layout_constraintTop_toBottomOf="@+id/general_appbar">
 
-        <com.google.android.material.chip.Chip
-            android:id="@+id/filter_status"
-            style="@style/Widget.MaterialComponents.Chip.Action"
+        <com.google.android.material.chip.ChipGroup
+            android:id="@+id/chip_group_filter"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            app:chipIcon="@drawable/ic_close"
-            app:chipIconTint="@color/colorPrimary"
-            app:chipIconVisible="true"
-            tools:text="@string/filter_status_alive" />
+            android:background="@color/colorBackground"
+            android:paddingStart="@dimen/margin_medium"
+            android:paddingEnd="@dimen/margin_medium"
+            android:visibility="gone"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="parent"
+            app:singleLine="true"
+            tools:visibility="visible">
 
-        <com.google.android.material.chip.Chip
-            android:id="@+id/filter_species"
-            style="@style/Widget.MaterialComponents.Chip.Action"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            app:chipIcon="@drawable/ic_close"
-            app:chipIconTint="@color/colorPrimary"
-            app:chipIconVisible="true"
-            tools:text="@string/filter_status_dead" />
+            <com.google.android.material.chip.Chip
+                android:id="@+id/filter_status"
+                style="@style/Widget.MaterialComponents.Chip.Action"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:chipIcon="@drawable/ic_close"
+                app:chipIconTint="@color/colorPrimary"
+                app:chipIconVisible="true"
+                tools:text="@string/filter_status_alive" />
 
-        <com.google.android.material.chip.Chip
-            android:id="@+id/filter_gender"
-            style="@style/Widget.MaterialComponents.Chip.Action"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            app:chipIcon="@drawable/ic_close"
-            app:chipIconTint="@color/colorPrimary"
-            app:chipIconVisible="true"
-            tools:text="@string/filter_status_unknown" />
+            <com.google.android.material.chip.Chip
+                android:id="@+id/filter_species"
+                style="@style/Widget.MaterialComponents.Chip.Action"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:chipIcon="@drawable/ic_close"
+                app:chipIconTint="@color/colorPrimary"
+                app:chipIconVisible="true"
+                tools:text="@string/filter_status_dead" />
 
-    </com.google.android.material.chip.ChipGroup>
+            <com.google.android.material.chip.Chip
+                android:id="@+id/filter_gender"
+                style="@style/Widget.MaterialComponents.Chip.Action"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:chipIcon="@drawable/ic_close"
+                app:chipIconTint="@color/colorPrimary"
+                app:chipIconVisible="true"
+                tools:text="@string/filter_status_unknown" />
+
+        </com.google.android.material.chip.ChipGroup>
+
+    </HorizontalScrollView>
 
     <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
         android:id="@+id/swipeRefreshLayout"
@@ -56,7 +90,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/chip_group_filter">
+        app:layout_constraintTop_toBottomOf="@+id/chip_group_filter_layout">
 
         <androidx.coordinatorlayout.widget.CoordinatorLayout
             android:layout_width="match_parent"
@@ -81,8 +115,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="bottom"
                 android:backgroundTint="@color/colorPrimary"
-                app:menu="@menu/character_menu"
-                app:navigationIcon="@drawable/ic_menu" />
+                app:menu="@menu/character_menu" />
 
         </androidx.coordinatorlayout.widget.CoordinatorLayout>
 

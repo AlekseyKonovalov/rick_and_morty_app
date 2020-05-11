@@ -6,18 +6,17 @@ import com.arellomobile.mvp.presenter.InjectPresenter
 import com.arellomobile.mvp.presenter.ProvidePresenter
 import com.example.rickandmortyapp.R
 import com.example.rickandmortyapp.core.base.BaseFragment
-import com.example.rickandmortyapp.core.gone
+import com.example.rickandmortyapp.core.util.gone
 import com.example.rickandmortyapp.core.pagination.PaginationUtil
-import com.example.rickandmortyapp.core.show
+import com.example.rickandmortyapp.core.util.show
 import com.example.rickandmortyapp.feature.characters.characters_fm.presentation.CharactersPresenter.Companion.GENDER_FILTER
 import com.example.rickandmortyapp.feature.characters.characters_fm.presentation.CharactersPresenter.Companion.SPECIES_FILTER
 import com.example.rickandmortyapp.feature.characters.characters_fm.presentation.CharactersPresenter.Companion.STATUS_FILTER
 import com.example.rickandmortyapp.feature.characters.characters_fm.presentation.adapter.CharactersAdapter
 import com.example.rickandmortyapp.feature.characters.characters_fm.presentation.filter_dialog.FilterDialog
-import com.example.rickandmortyapp.feature.characters.characters_fm.presentation.filter_dialog.model.FilterModel
-import com.example.rickandmortyapp.feature.characters.characters_fm.presentation.filter_dialog.model.FilterStatus
-import com.example.rickandmortyapp.feature.characters.characters_fm.presentation.navigation_dialog.NavigationMenuDialog
 import com.example.rickandmortyapp.feature.characters.characters_fm.presentation.model.CharacterModel
+import com.google.android.material.chip.Chip
+import com.google.android.material.snackbar.Snackbar
 import io.reactivex.disposables.Disposable
 import kotlinx.android.synthetic.main.characters_fragment.*
 
@@ -43,9 +42,6 @@ class CharactersFragment : BaseFragment(), CharactersView {
     override fun initListeners() {
         swipeRefreshLayout.setOnRefreshListener {
             presenter.onRefresh()
-        }
-        bottom_bar.setNavigationOnClickListener {
-            presenter.onMenuClick()
         }
         bottom_bar.setOnMenuItemClickListener {
             when (it.itemId) {
@@ -82,12 +78,6 @@ class CharactersFragment : BaseFragment(), CharactersView {
         }
     }
 
-    override fun openMenu() {
-        if (childFragmentManager.findFragmentByTag(NavigationMenuDialog.TAG) == null) {
-            NavigationMenuDialog.newInstance().show(childFragmentManager, NavigationMenuDialog.TAG)
-        }
-    }
-
     override fun initAdapter() {
         characters_list.layoutManager = GridLayoutManager(requireContext(), NUMBERS_OF_COLUMN)
         characters_list.adapter = charactersAdapter
@@ -112,23 +102,34 @@ class CharactersFragment : BaseFragment(), CharactersView {
         }
     }
 
-    override fun setChipGroup(filterData: FilterModel?) {
-        filterData?.let {
-            chip_group_filter.show()
-            it.status?.let {
-                filter_status.text = getString(R.string.filter_chip_title, getString(R.string.filter_status_title), it.localeName)
-                filter_status.show()
 
-            } ?: run { filter_status.gone() }
-            it.species?.let {
-                filter_species.text =getString(R.string.filter_chip_title, getString(R.string.filter_species_title), it.localeName)
-                filter_species.show()
-            } ?: run { filter_species.gone() }
-            it.gender?.let {
-                filter_gender.text = getString(R.string.filter_chip_title, getString(R.string.filter_gender_title), it.localeName)
-                filter_gender.show()
-            } ?: run { filter_gender.gone() }
-        } ?: run { chip_group_filter.gone() }
+    override fun setChipGroup(status: String?, species: String?, gender: String?) {
+        if (status == null && species == null && gender == null) {
+            chip_group_filter.gone()
+            return
+        }
+        chip_group_filter.show()
+        updateChipVisibility(filter_status, status, getString(R.string.filter_status_title))
+        updateChipVisibility(filter_species, species, getString(R.string.filter_species_title))
+        updateChipVisibility(filter_gender, gender, getString(R.string.filter_gender_title))
+    }
+
+    private fun updateChipVisibility(chip: Chip, text: String?, title: String) {
+        text?.let {
+            showFilterChip(
+                chip,
+                getString(R.string.filter_chip_title, title, it)
+            )
+        } ?: run { chip.gone() }
+    }
+
+    private fun showFilterChip(chip: Chip, text: String) {
+        chip.text = text
+        chip.show()
+    }
+
+    override fun showError(error: String) {
+        Snackbar.make(container, error, Snackbar.LENGTH_LONG).show()
     }
 
     companion object {

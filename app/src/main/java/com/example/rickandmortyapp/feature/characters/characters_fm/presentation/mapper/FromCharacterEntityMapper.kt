@@ -1,7 +1,9 @@
 package com.example.rickandmortyapp.feature.characters.characters_fm.presentation.mapper
 
 import com.example.rickandmortyapp.domain.entity.CharacterEntity
+import com.example.rickandmortyapp.domain.entity.ListCharacterEntity
 import com.example.rickandmortyapp.feature.characters.characters_fm.presentation.model.CharacterModel
+import com.example.rickandmortyapp.feature.characters.characters_fm.presentation.model.ListCharacterEntityModel
 import javax.inject.Inject
 
 class FromCharacterEntityMapper @Inject constructor() {
@@ -22,9 +24,9 @@ class FromCharacterEntityMapper @Inject constructor() {
         createdDate = characterEntity.createdDate
     )
 
-    fun map(characterEntityList: List<CharacterEntity>): List<CharacterModel> {
+    fun map(characterEntityList: ListCharacterEntity): ListCharacterEntityModel {
         val list = mutableListOf<CharacterModel>()
-        characterEntityList.forEach { characterEntity ->
+        characterEntityList.list.forEach { characterEntity ->
             list.add(
                 CharacterModel(
                     id = characterEntity.id,
@@ -46,7 +48,7 @@ class FromCharacterEntityMapper @Inject constructor() {
                 )
             )
         }
-        return list
+        return ListCharacterEntityModel(characterEntityList.count, list)
     }
 
 }

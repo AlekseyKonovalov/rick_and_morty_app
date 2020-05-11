@@ -42,6 +42,7 @@
 
     <string name="filter_apply">Применить</string>
     <string name="filter_chip_title">%1$s: %2$s</string>
+    <string name="search_empty_error">Ничего не найдено</string>
 
 
 </resources>

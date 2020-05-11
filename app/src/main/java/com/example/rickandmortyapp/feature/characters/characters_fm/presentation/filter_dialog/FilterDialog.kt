@@ -10,13 +10,12 @@ import com.arellomobile.mvp.presenter.InjectPresenter
 import com.arellomobile.mvp.presenter.ProvidePresenter
 import com.example.rickandmortyapp.R
 import com.example.rickandmortyapp.core.base.BaseFragment
-import com.example.rickandmortyapp.core.module
+import com.example.rickandmortyapp.core.util.module
 import com.example.rickandmortyapp.feature.characters.characters_fm.presentation.filter_dialog.model.FilterGender
 import com.example.rickandmortyapp.feature.characters.characters_fm.presentation.filter_dialog.model.FilterSpecies
 import com.example.rickandmortyapp.feature.characters.characters_fm.presentation.filter_dialog.model.FilterStatus
 import com.google.android.material.bottomsheet.BottomSheetDialog
-import kotlinx.android.synthetic.main.dialog_filter.*
-import kotlinx.android.synthetic.main.dialog_navigation_menu.*
+import kotlinx.android.synthetic.main.bottomsheet_filter.*
 import toothpick.Toothpick
 
 
@@ -42,13 +41,14 @@ class FilterDialog : MvpAppCompatDialogFragment(), FilterDialogView {
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? =
-        inflater.inflate(R.layout.dialog_filter, container, false)
+        inflater.inflate(R.layout.bottomsheet_filter, container, false)
 
     override fun initListeners() {
         apply_btn.setOnClickListener {
             presenter.onApplyClick()
             dismissAllowingStateLoss()
         }
+        //todo refactor to recycler
         chip_group_status.setOnCheckedChangeListener { _, checkedId ->
             when (checkedId) {
                 R.id.filter_status_alive -> {
@@ -95,6 +95,49 @@ class FilterDialog : MvpAppCompatDialogFragment(), FilterDialogView {
                 else -> {
                     presenter.onGenderClick(null)
                 }
+            }
+        }
+    }
+
+    override fun setGender(gender: FilterGender) {
+        when (gender) {
+            FilterGender.MALE -> {
+                filter_gender_man.isChecked = true
+            }
+            FilterGender.FEMALE -> {
+                filter_gender_woman.isChecked = true
+            }
+            FilterGender.GENDERLESS -> {
+                filter_gender_genderless.isChecked = true
+            }
+            FilterGender.UNKNOWN -> {
+                presenter.onGenderClick(FilterGender.UNKNOWN)
+                filter_gender_unknown.isChecked = true
+            }
+        }
+    }
+
+    override fun setSpecies(species: FilterSpecies) {
+        when (species) {
+            FilterSpecies.HUMAN -> {
+                filter_species_human.isChecked = true
+            }
+            FilterSpecies.ALIEN -> {
+                filter_species_alien.isChecked = true
+            }
+        }
+    }
+
+    override fun setStatus(status: FilterStatus) {
+        when (status) {
+            FilterStatus.ALIVE -> {
+                filter_status_alive.isChecked = true
+            }
+            FilterStatus.DEAD -> {
+                filter_status_dead.isChecked = true
+            }
+            FilterStatus.UNKNOWN -> {
+                filter_status_unknown.isChecked = true
             }
         }
     }

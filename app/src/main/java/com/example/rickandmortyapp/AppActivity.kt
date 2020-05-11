@@ -4,6 +4,7 @@ import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import com.example.rickandmortyapp.core.base.BaseFlowFragment
 import com.example.rickandmortyapp.core.di.NetModule
+import com.example.rickandmortyapp.core.di.Scopes
 import com.example.rickandmortyapp.navigation.*
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
@@ -21,7 +22,7 @@ class AppActivity : AppCompatActivity() {
 
     private val disposables = CompositeDisposable()
 
-    var flowFragments: LinkedList<String> = LinkedList()
+    private var flowFragments: LinkedList<String> = LinkedList()
 
     private val router: AppRouter by lazy {
         AppRouter(supportFragmentManager, R.id.fragmentContainerView, flowFragments)

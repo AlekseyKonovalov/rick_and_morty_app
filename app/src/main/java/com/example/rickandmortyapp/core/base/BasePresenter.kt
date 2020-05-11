@@ -12,24 +12,13 @@ import io.reactivex.schedulers.Schedulers
 abstract class BasePresenter<View : MvpView> : MvpPresenter<View>() {
 
     private val fullLifeCycleCompositeDisposable = CompositeDisposable()
-    private val viewLifeCycleCompositeDisposable = CompositeDisposable()
 
     fun Disposable.addToFullLifeCycle() {
         fullLifeCycleCompositeDisposable.add(this)
     }
 
-    fun Disposable.addToViewLifeCycle() {
-        viewLifeCycleCompositeDisposable.add(this)
-    }
-
-    override fun destroyView(view: View) {
-        super.destroyView(view)
-        viewLifeCycleCompositeDisposable.clear()
-    }
-
     override fun onDestroy() {
         fullLifeCycleCompositeDisposable.dispose()
-        viewLifeCycleCompositeDisposable.dispose()
     }
 
     protected fun <Stream> schedulersTransformerObservable(

@@ -8,7 +8,7 @@ import com.arellomobile.mvp.presenter.ProvidePresenter
 import com.bumptech.glide.Glide
 import com.example.rickandmortyapp.R
 import com.example.rickandmortyapp.core.base.BaseFragment
-import com.example.rickandmortyapp.core.setTitle
+import com.example.rickandmortyapp.core.util.setTitle
 import com.example.rickandmortyapp.feature.characters.characters_fm.presentation.model.CharacterModel
 import kotlinx.android.synthetic.main.character_details_fragment.*
 
